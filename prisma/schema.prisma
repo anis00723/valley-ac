@@ -20,3 +20,35 @@ model Post {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 }
+
+model Course {
+  id            String  @id @default(uuid())
+  name          String
+  price         Float
+  thumbnail     String
+  reviewCount   Int     @default(0)
+  rating        Float   @default(0)
+  enrolledCount Int     @default(0)
+  featured      Boolean @default(false)
+
+  // Relations
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  // To return `Date`s intact through the API we need to add data transformers
+  // https://trpc.io/docs/data-transformers
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  name      String
+  Courses   Course[]
+  thumbnail String
+
+  // To return `Date`s intact through the API we need to add data transformers
+  // https://trpc.io/docs/data-transformers
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
