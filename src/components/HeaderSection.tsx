@@ -26,7 +26,7 @@ const features = [
 ];
 
 const HeaderSection = () => (
-  <div className="bg-gray-100">
+  <div className="bg-gray-300">
     {/* Header */}
     <div className="relative pb-32 bg-gray-800">
       <div className="absolute inset-0">
