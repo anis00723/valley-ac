@@ -26,13 +26,7 @@ export const categoryRouter = createRouter()
        * @link https://trpc.io/docs/useInfiniteQuery
        */
 
-      return prisma.category.findMany({
-        select: {
-          id: true,
-          name: true,
-          thumbnail: true,
-        },
-      });
+      return prisma.category.findMany({});
     },
   })
   // get by id

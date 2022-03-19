@@ -6,9 +6,9 @@ import * as trpcNext from '@trpc/server/adapters/next';
  * @link https://trpc.io/docs/context
  */
 export const createContext = async (
-  opts: trpcNext.CreateNextContextOptions,
+  opts?: trpcNext.CreateNextContextOptions,
 ) => {
-  const { req, res } = opts;
+  const { req, res } = opts ?? {};
   // for API-response caching see https://trpc.io/docs/caching
   return {
     req,

@@ -26,6 +26,7 @@ model Course {
   name          String
   price         Float
   thumbnail     String
+  description   String  @default("") @db.Text
   reviewCount   Int     @default(0)
   rating        Float   @default(0)
   enrolledCount Int     @default(0)
@@ -43,7 +44,7 @@ model Course {
 
 model Category {
   id        String   @id @default(uuid())
-  name      String
+  name      String   @unique
   Courses   Course[]
   thumbnail String
 

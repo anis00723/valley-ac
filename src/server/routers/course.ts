@@ -21,13 +21,56 @@ export const courseRouter = createRouter()
   })
   // read
   .query('all', {
-    async resolve() {
-      /**
-       * For pagination you can have a look at this docs site
-       * @link https://trpc.io/docs/useInfiniteQuery
-       */
+    input: z.object({
+      categoryIds: z.string().uuid().array().optional(),
+      limit: z.number().min(1).max(100).nullish(),
+      cursor: z.string().nullish(),
+    }),
+    async resolve({ input }) {
+      const limit = input.limit ?? 9;
+      const { cursor } = input;
+      let items = [];
+      console.log('categoryIds', input.categoryIds);
+      if (input.categoryIds?.length !== 0) {
+        items = await prisma.course.findMany({
+          take: limit + 1,
+          where: {
+            categoryId: {
+              in: input.categoryIds,
+            },
+          },
+          include: {
+            category: true,
+          },
+          cursor: cursor ? { id: cursor } : undefined,
+          orderBy: {
+            id: 'asc',
+          },
+        });
+      } else {
+        items = await prisma.course.findMany({
+          take: limit + 1,
+          include: {
+            category: true,
+          },
 
-      return prisma.course.findMany({});
+          cursor: cursor ? { id: cursor } : undefined,
+          orderBy: {
+            id: 'asc',
+          },
+        });
+      }
+
+      let nextCursor: typeof cursor | null = null;
+      if (items.length > limit) {
+        const nextItem = items.pop();
+        nextCursor = nextItem?.id;
+      }
+
+      return {
+        items,
+        nextCursor,
+      };
     },
   })
   // featured

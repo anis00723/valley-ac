@@ -1,13 +1,19 @@
-import { Fragment, ReactNode, useState } from 'react';
+import { Fragment, ReactNode } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
 import { classNames } from 'utils/classNames';
-import FormationDropdown from 'components/FormationDropdown';
+import FormationDropdown from 'components/Layout/FormationDropdown';
 import Footer from './Footer';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { isExactPath } from 'utils/pathHelpers';
 
 type DefaultLayoutProps = { children: ReactNode };
 
 export const AppLayout = ({ children }: DefaultLayoutProps) => {
+  const router = useRouter();
+  const activeRouter = router.pathname;
+
   return (
     <>
       <Disclosure as="nav" className="bg-white shadow">
@@ -41,12 +47,18 @@ export const AppLayout = ({ children }: DefaultLayoutProps) => {
                   </div>
                   <div className="hidden sm:ml-6 sm:flex sm:space-x-3">
                     {/*Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
-                    <a
-                      href="#"
-                      className="inline-flex items-center px-4 pt-1 text-sm font-medium text-gray-900 border-b-2 border-indigo-500"
-                    >
-                      Acceuil
-                    </a>
+                    <Link href="/">
+                      <a
+                        className={classNames(
+                          isExactPath(activeRouter, '/')
+                            ? 'border-b-2 border-indigo-500'
+                            : '',
+                          'inline-flex items-center px-4 pt-1 text-sm font-medium text-gray-900',
+                        )}
+                      >
+                        Acceuil
+                      </a>
+                    </Link>
                     <FormationDropdown />
                   </div>
                 </div>
