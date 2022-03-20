@@ -30,6 +30,7 @@ export const courseRouter = createRouter()
       const limit = input.limit ?? 9;
       const { cursor } = input;
       let items = [];
+      let count = 0;
       if (input.categoryIds?.length !== 0) {
         items = await prisma.course.findMany({
           take: limit + 1,
@@ -46,6 +47,14 @@ export const courseRouter = createRouter()
             id: 'asc',
           },
         });
+
+        count = await prisma.course.count({
+          where: {
+            categoryId: {
+              in: input.categoryIds,
+            },
+          },
+        });
       } else {
         items = await prisma.course.findMany({
           take: limit + 1,
@@ -58,6 +67,8 @@ export const courseRouter = createRouter()
             id: 'asc',
           },
         });
+
+        count = await prisma.course.count();
       }
 
       let nextCursor: typeof cursor | null = null;
@@ -66,9 +77,21 @@ export const courseRouter = createRouter()
         nextCursor = nextItem?.id;
       }
 
+      let previousCursor: typeof cursor | null = null;
+      if (cursor) {
+        const previousItem = await prisma.course.findUnique({
+          where: {
+            id: cursor,
+          },
+        });
+        previousCursor = previousItem?.id;
+      }
+
       return {
         items,
+        count,
         nextCursor,
+        previousCursor,
       };
     },
   })

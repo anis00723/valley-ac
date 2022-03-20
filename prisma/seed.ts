@@ -69,10 +69,15 @@ async function main() {
       name: faker.name.findName(),
       price: faker.datatype.number({ min: 10, max: 100, precision: 0.01 }),
       description: faker.lorem.paragraph(),
+      rating: faker.datatype.number({ min: 0, max: 5, precision: 0.1 }),
+      enrolledCount: faker.datatype.number({ min: 0, max: 100 }),
       thumbnail: faker.image.imageUrl(),
       categoryId: faker.random.arrayElement(categories).id,
     });
   }
+
+  // Remove all courses
+  await prisma.course.deleteMany({});
 
   await prisma.course.createMany({
     data: courses,

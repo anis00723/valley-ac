@@ -53,10 +53,20 @@ const CoursesPage = (
     },
   );
 
-  const [courses, setCourses] = useState(() => {
-    const courses = coursesQuery.data?.pages?.map((page) => page.items).flat();
-    return courses || [];
-  });
+  console.log('coursesQuery', coursesQuery.data);
+
+  const [pageIndex, setPageIndex] = useState(0);
+
+  const [courses, setCourses] = useState(
+    () => coursesQuery.data?.pages[pageIndex]?.items || [],
+  );
+
+  const [count, setCount] = useState(
+    coursesQuery.data?.pages[pageIndex]?.count || 0,
+  );
+
+  const [firstElementIndex, setFirstElementIndex] = useState(0);
+  const [lastElementIndex, setLastElementIndex] = useState(0);
 
   const replaceCourses = useCallback((newCourses) => {
     setCourses(newCourses);
@@ -71,20 +81,64 @@ const CoursesPage = (
   }, [addOption, categoryQuery.data]);
 
   useEffect(() => {
-    console.log('useEffecte.categoryIds', categoryIds);
     categoryIds?.map((categoryId) => {
       setOneOptionSelected('category', categoryId);
     });
   }, [categoryIds, setOneOptionSelected]);
 
   useEffect(() => {
-    const courses = coursesQuery.data?.pages?.map((page) => page.items).flat();
-    replaceCourses(courses ?? []);
-  }, [coursesQuery.data?.pages, replaceCourses]);
+    const courses = coursesQuery.data?.pages[pageIndex]?.items || [];
+    const count = coursesQuery.data?.pages[pageIndex]?.count || 0;
+    replaceCourses(courses);
+    setCount(count);
+  }, [coursesQuery.data?.pages, pageIndex, replaceCourses]);
+
+  useEffect(() => {
+    console.log(
+      `pageIndex[${pageIndex}] * courses.length[${courses.length}] + 1 = ${
+        pageIndex * courses.length + 1
+      }`,
+    );
+    setFirstElementIndex(() => {
+      if (pageIndex === 0) {
+        return 1;
+      }
+      return (
+        // @ts-ignore
+        pageIndex * coursesQuery?.data?.pages[pageIndex - 1]?.items?.length + 1
+      );
+    });
+  }, [pageIndex, coursesQuery.data?.pages, courses.length]);
+
+  useEffect(() => {
+    setLastElementIndex(firstElementIndex + courses.length - 1);
+  }, [firstElementIndex, courses]);
 
   const handleOptionsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     toggleOptionSelect('category', e.target.value);
+    setPageIndex(0);
     setUserSelectedCategory(true);
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+      /* you can also use 'auto' behaviour
+         in place of 'smooth' */
+    });
+  };
+
+  const handleNextPage = () => {
+    setPageIndex((pageIndex) => pageIndex + 1);
+    coursesQuery.fetchNextPage();
+    // scrollToTop();
+  };
+
+  const handlePreviousPage = () => {
+    setPageIndex((pageIndex) => pageIndex - 1);
+    coursesQuery.fetchPreviousPage();
+    // scrollToTop();
   };
 
   return (
@@ -264,7 +318,17 @@ const CoursesPage = (
             <div className="mt-6 mb-10 lg:mt-0 lg:col-span-2 xl:col-span-3">
               <CoursesGrid courses={courses} />
 
-              <CoursesNavigation />
+              <CoursesNavigation
+                count={count}
+                onNextPage={handleNextPage}
+                onPreviousPage={handlePreviousPage}
+                firstElementIndex={firstElementIndex}
+                lastElementIndex={lastElementIndex}
+                hasNextPage={
+                  coursesQuery.data?.pages[pageIndex]?.nextCursor !== null
+                }
+                pageIndex={pageIndex}
+              />
             </div>
           </div>
         </main>

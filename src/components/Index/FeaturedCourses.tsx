@@ -2,6 +2,7 @@ import { trpc } from 'utils/trpc';
 
 export default function FeaturedCourses() {
   const categoryQuery = trpc.useQuery(['course.featured']);
+  console.log(categoryQuery);
   return (
     <div className="bg-gray-100">
       <div className="max-w-2xl px-4 py-10 mx-auto sm:py-16 sm:px-6 lg:max-w-7xl lg:px-8">
