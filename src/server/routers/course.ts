@@ -30,7 +30,6 @@ export const courseRouter = createRouter()
       const limit = input.limit ?? 9;
       const { cursor } = input;
       let items = [];
-      console.log('categoryIds', input.categoryIds);
       if (input.categoryIds?.length !== 0) {
         items = await prisma.course.findMany({
           take: limit + 1,
