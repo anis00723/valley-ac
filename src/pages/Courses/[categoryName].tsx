@@ -3,11 +3,7 @@ import React, { useCallback, useEffect } from 'react';
 import { createSSGHelpers } from '@trpc/react/ssg';
 import { Fragment, useState } from 'react';
 import { Dialog, Disclosure, Transition } from '@headlessui/react';
-import {
-  ArrowNarrowLeftIcon,
-  ArrowNarrowRightIcon,
-  XIcon,
-} from '@heroicons/react/outline';
+import { XIcon } from '@heroicons/react/outline';
 import { ChevronDownIcon, PlusSmIcon } from '@heroicons/react/solid';
 import { classNames } from 'utils/classNames';
 import { trpc } from 'utils/trpc';

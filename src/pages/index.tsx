@@ -2,9 +2,6 @@ import CategoriesPreview from 'components/Index/CategoriesPreview';
 import FeaturedCourses from 'components/Index/FeaturedCourses';
 import HeaderSection from 'components/Index/HeaderSection';
 import Testimonials from 'components/Index/Testimonials';
-import Link from 'next/link';
-import { GetStaticPropsContext } from 'next/types';
-import { trpc } from '../utils/trpc';
 
 // const IndexPage = () => {
 //   const utils = trpc.useContext();
