@@ -7,7 +7,7 @@ datasource db {
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
 }
 
 model Post {
@@ -21,23 +21,47 @@ model Post {
   updatedAt DateTime @default(now()) @updatedAt
 }
 
-model Course {
-  id            String  @id @default(uuid())
-  name          String
-  price         Float
-  thumbnail     String
-  description   String  @default("") @db.Text
-  reviewCount   Int     @default(0)
-  rating        Float   @default(0)
-  enrolledCount Int     @default(0)
-  featured      Boolean @default(false)
-
-  // Relations
-  category   Category @relation(fields: [categoryId], references: [id])
-  categoryId String
+model User {
+  id              String   @id @default(uuid())
+  name            String
+  email           String
+  enrolledCourses Course[]
 
   // To return `Date`s intact through the API we need to add data transformers
   // https://trpc.io/docs/data-transformers
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Course {
+  id          String   @id @default(uuid())
+  name        String
+  price       Float
+  thumbnail   String
+  description String   @default("") @db.Text
+  reviews     Review[]
+  featured    Boolean  @default(false)
+
+  // Relations
+  enrolledUsers User[]
+
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+
+  // To return `Date`s intact through the API we need to add data transformers
+  // https://trpc.io/docs/data-transformers
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Review {
+  id       String @id @default(uuid())
+  rating   Float
+  comment  String @db.Text
+  Course   Course @relation(fields: [courseId], references: [id])
+  courseId String
+
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 }

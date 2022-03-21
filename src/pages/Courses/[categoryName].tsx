@@ -14,6 +14,18 @@ import { createContext } from 'server/context';
 import superjson from 'superjson';
 import { appRouter } from 'server/routers/_app';
 import CoursesNavigation from 'components/Courses/CoursesNavigation';
+import { ResultItem } from 'server/routers/course';
+
+const processCouses = (courses: ResultItem[] | undefined) =>
+  courses?.map((course) => {
+    const avgRating =
+      course.reviews.reduce((acc, review) => acc + review.rating, 0) /
+      course.reviews.length;
+    return {
+      ...course,
+      avgRating,
+    };
+  }) || [];
 
 const CoursesPage = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>,
@@ -57,12 +69,12 @@ const CoursesPage = (
 
   const [pageIndex, setPageIndex] = useState(0);
 
-  const [courses, setCourses] = useState(
-    () => coursesQuery.data?.pages[pageIndex]?.items || [],
+  const [courses, setCourses] = useState(() =>
+    processCouses(coursesQuery.data?.pages[pageIndex]?.result.items),
   );
 
   const [count, setCount] = useState(
-    coursesQuery.data?.pages[pageIndex]?.count || 0,
+    coursesQuery.data?.pages[pageIndex]?.result.count || 0,
   );
 
   const [firstElementIndex, setFirstElementIndex] = useState(0);
@@ -87,18 +99,15 @@ const CoursesPage = (
   }, [categoryIds, setOneOptionSelected]);
 
   useEffect(() => {
-    const courses = coursesQuery.data?.pages[pageIndex]?.items || [];
-    const count = coursesQuery.data?.pages[pageIndex]?.count || 0;
+    const courses = processCouses(
+      coursesQuery.data?.pages[pageIndex]?.result.items,
+    );
+    const count = coursesQuery.data?.pages[pageIndex]?.result.count || 0;
     replaceCourses(courses);
     setCount(count);
   }, [coursesQuery.data?.pages, pageIndex, replaceCourses]);
 
   useEffect(() => {
-    console.log(
-      `pageIndex[${pageIndex}] * courses.length[${courses.length}] + 1 = ${
-        pageIndex * courses.length + 1
-      }`,
-    );
     setFirstElementIndex(() => {
       if (pageIndex === 0) {
         return 1;
@@ -129,16 +138,16 @@ const CoursesPage = (
     });
   };
 
-  const handleNextPage = () => {
+  const handleNextPage = async () => {
     setPageIndex((pageIndex) => pageIndex + 1);
-    coursesQuery.fetchNextPage();
-    // scrollToTop();
+    await coursesQuery.fetchNextPage();
+    scrollToTop();
   };
 
-  const handlePreviousPage = () => {
+  const handlePreviousPage = async () => {
     setPageIndex((pageIndex) => pageIndex - 1);
-    coursesQuery.fetchPreviousPage();
-    // scrollToTop();
+    await coursesQuery.fetchPreviousPage();
+    scrollToTop();
   };
 
   return (

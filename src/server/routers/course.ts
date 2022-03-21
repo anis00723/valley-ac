@@ -1,6 +1,22 @@
+import { Category, Course, Review } from '@prisma/client';
 import { createRouter } from 'server/createRouter';
 import { prisma } from 'server/prisma';
 import { z } from 'zod';
+
+export type ResultItem = Course & {
+  reviews: Review[];
+  category: Category;
+  _count: {
+    reviews: number;
+    enrolledUsers: number;
+  };
+  avgRating?: number;
+};
+
+type GetAllCoursesResult = {
+  items: ResultItem[];
+  count: number;
+};
 
 export const courseRouter = createRouter()
   // create
@@ -30,7 +46,11 @@ export const courseRouter = createRouter()
       const limit = input.limit ?? 9;
       const { cursor } = input;
       let items = [];
-      let count = 0;
+      const result: GetAllCoursesResult = {
+        items: [],
+        count: 0,
+      };
+
       if (input.categoryIds?.length !== 0) {
         items = await prisma.course.findMany({
           take: limit + 1,
@@ -41,6 +61,13 @@ export const courseRouter = createRouter()
           },
           include: {
             category: true,
+            reviews: true,
+            _count: {
+              select: {
+                enrolledUsers: true,
+                reviews: true,
+              },
+            },
           },
           cursor: cursor ? { id: cursor } : undefined,
           orderBy: {
@@ -48,27 +75,38 @@ export const courseRouter = createRouter()
           },
         });
 
-        count = await prisma.course.count({
+        const count = await prisma.course.count({
           where: {
             categoryId: {
               in: input.categoryIds,
             },
           },
         });
+
+        result.count = count;
+        result.items = items;
       } else {
         items = await prisma.course.findMany({
           take: limit + 1,
           include: {
             category: true,
+            reviews: true,
+            _count: {
+              select: {
+                enrolledUsers: true,
+                reviews: true,
+              },
+            },
           },
-
           cursor: cursor ? { id: cursor } : undefined,
           orderBy: {
             id: 'asc',
           },
         });
 
-        count = await prisma.course.count();
+        const count = await prisma.course.count();
+        result.count = count;
+        result.items = items;
       }
 
       let nextCursor: typeof cursor | null = null;
@@ -77,21 +115,9 @@ export const courseRouter = createRouter()
         nextCursor = nextItem?.id;
       }
 
-      let previousCursor: typeof cursor | null = null;
-      if (cursor) {
-        const previousItem = await prisma.course.findUnique({
-          where: {
-            id: cursor,
-          },
-        });
-        previousCursor = previousItem?.id;
-      }
-
       return {
-        items,
-        count,
+        result,
         nextCursor,
-        previousCursor,
       };
     },
   })

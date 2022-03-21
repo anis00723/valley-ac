@@ -61,28 +61,41 @@ async function main() {
     skipDuplicates: true,
   });
 
-  // fake course data using faker
-  const courses = [];
-  for (let i = 0; i < 50; i++) {
-    courses.push({
-      id: faker.datatype.uuid(),
-      name: faker.name.findName(),
-      price: faker.datatype.number({ min: 10, max: 100, precision: 0.01 }),
-      description: faker.lorem.paragraph(),
-      rating: faker.datatype.number({ min: 0, max: 5, precision: 0.1 }),
-      enrolledCount: faker.datatype.number({ min: 0, max: 100 }),
-      thumbnail: faker.image.imageUrl(),
-      categoryId: faker.random.arrayElement(categories).id,
-    });
-  }
-
   // Remove all courses
   await prisma.course.deleteMany({});
 
-  await prisma.course.createMany({
-    data: courses,
-    skipDuplicates: true,
-  });
+  // fake course data using faker
+  for (let i = 0; i < 50; i++) {
+    const randomNumberOfReviews = Math.floor(Math.random() * 10) + 1;
+    // fake reviews for each course
+    const reviews = [];
+    for (let j = 0; j < randomNumberOfReviews; j++) {
+      reviews.push({
+        id: faker.datatype.uuid(),
+        comment: faker.lorem.sentence(),
+        rating: Math.floor(Math.random() * 5) + 1,
+      });
+    }
+
+    const course = {
+      id: faker.datatype.uuid(),
+      name: faker.commerce.productName(),
+      price: faker.datatype.number({ min: 10, max: 100, precision: 0.01 }),
+      thumbnail: faker.image.imageUrl(),
+      categoryId: faker.random.arrayElement(categories).id,
+      description: faker.lorem.paragraph(),
+      reviews: {
+        create: reviews,
+      },
+    };
+
+    await prisma.course.create({
+      data: course,
+      include: {
+        reviews: true,
+      },
+    });
+  }
 }
 
 main()
