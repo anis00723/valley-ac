@@ -16,16 +16,19 @@ import { appRouter } from 'server/routers/_app';
 import CoursesNavigation from 'components/Courses/CoursesNavigation';
 import { ResultItem } from 'server/routers/course';
 
-const processCouses = (courses: ResultItem[] | undefined) =>
-  courses?.map((course) => {
-    const avgRating =
-      course.reviews.reduce((acc, review) => acc + review.rating, 0) /
-      course.reviews.length;
-    return {
-      ...course,
-      avgRating,
-    };
-  }) || [];
+const processCouses = (courses: ResultItem[] | undefined) => {
+  return (
+    courses?.map((course) => {
+      const avgRating =
+        course.reviews.reduce((acc, review) => acc + review.rating, 0) /
+        course.reviews.length;
+      return {
+        ...course,
+        avgRating,
+      };
+    }) || []
+  );
+};
 
 const CoursesPage = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>,
@@ -64,8 +67,6 @@ const CoursesPage = (
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     },
   );
-
-  console.log('coursesQuery', coursesQuery.data);
 
   const [pageIndex, setPageIndex] = useState(0);
 
@@ -113,8 +114,10 @@ const CoursesPage = (
         return 1;
       }
       return (
-        // @ts-ignore
-        pageIndex * coursesQuery?.data?.pages[pageIndex - 1]?.items?.length + 1
+        pageIndex *
+          // @ts-ignore
+          coursesQuery?.data?.pages[pageIndex - 1]?.result?.items?.length +
+        1
       );
     });
   }, [pageIndex, coursesQuery.data?.pages, courses.length]);
@@ -348,6 +351,7 @@ const CoursesPage = (
 
 export default CoursesPage;
 
+// ! Only need this for SSG
 // export const getStaticPaths: GetStaticPaths = async () => {
 //   const ssg = createSSGHelpers({
 //     router: appRouter,
@@ -389,7 +393,6 @@ export async function getServerSideProps(
     : [];
 
   const categories = await ssg.fetchQuery('category.all');
-  // get category ids fro; category
   const categoriesToGet = categories.filter((category) =>
     categoryName.includes(category.name),
   );

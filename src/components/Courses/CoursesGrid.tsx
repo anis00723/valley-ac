@@ -7,7 +7,7 @@ import { UsersIcon } from '@heroicons/react/outline';
 const CoursesGrid = ({ courses }: { courses: ResultItem[] }) => {
   return (
     <div className="max-w-2xl px-4 mx-auto sm:px-6 lg:max-w-7xl lg:px-8">
-      <h2 className="sr-only">Products</h2>
+      <h2 className="sr-only">Courses</h2>
 
       <div className="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-3 lg:gap-x-8">
         {courses?.map((product) => (
