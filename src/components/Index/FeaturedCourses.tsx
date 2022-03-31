@@ -55,7 +55,7 @@ export default function FeaturedCourses() {
                 <p>${product.price}</p>
               </div>
 
-              <p className="mt-2 mr-2 text-sm text-gray-500 line-clamp-2">
+              <p className="mt-3 mr-2 text-sm text-gray-500 line-clamp-2">
                 {product.description}
               </p>
 
