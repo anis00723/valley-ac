@@ -20,7 +20,7 @@ const CoursesNavigation = (props: CoursesNavigationProps) => {
   } = props;
   return (
     <nav
-      className="flex items-center justify-between px-4 py-3 mt-16 bg-white border-t border-gray-200 sm:px-6"
+      className="mt-16 flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6"
       aria-label="Pagination"
     >
       <div className="hidden sm:block">
@@ -30,16 +30,16 @@ const CoursesNavigation = (props: CoursesNavigationProps) => {
           <span className="font-medium">{count}</span> results
         </p>
       </div>
-      <div className="flex justify-between flex-1 sm:justify-end">
+      <div className="flex flex-1 justify-between sm:justify-end">
         <button
-          className="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-25 disabled:cursor-not-allowed"
+          className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-25"
           disabled={pageIndex === 0}
           onClick={onPreviousPage}
         >
           Previous
         </button>
         <button
-          className="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-25 disabled:cursor-not-allowed"
+          className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-25"
           onClick={onNextPage}
           disabled={!hasNextPage}
         >

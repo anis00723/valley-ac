@@ -184,16 +184,16 @@ const CoursesPage = (
               leaveFrom="translate-x-0"
               leaveTo="translate-x-full"
             >
-              <div className="relative flex flex-col w-full h-full max-w-xs py-4 pb-6 ml-auto overflow-y-auto bg-white shadow-xl">
+              <div className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-6 shadow-xl">
                 <div className="flex items-center justify-between px-4">
                   <h2 className="text-lg font-medium text-gray-900">Filters</h2>
                   <button
                     type="button"
-                    className="flex items-center justify-center w-10 h-10 p-2 -mr-2 text-gray-400 hover:text-gray-500"
+                    className="-mr-2 flex h-10 w-10 items-center justify-center p-2 text-gray-400 hover:text-gray-500"
                     onClick={() => setMobileFiltersOpen(false)}
                   >
                     <span className="sr-only">Close menu</span>
-                    <XIcon className="w-6 h-6" aria-hidden="true" />
+                    <XIcon className="h-6 w-6" aria-hidden="true" />
                   </button>
                 </div>
 
@@ -203,16 +203,16 @@ const CoursesPage = (
                     <Disclosure
                       as="div"
                       key={section.name}
-                      className="pt-4 pb-4 border-t border-gray-200"
+                      className="border-t border-gray-200 pt-4 pb-4"
                     >
                       {({ open }) => (
                         <fieldset>
                           <legend className="w-full px-2">
-                            <Disclosure.Button className="flex items-center justify-between w-full p-2 text-gray-400 hover:text-gray-500">
+                            <Disclosure.Button className="flex w-full items-center justify-between p-2 text-gray-400 hover:text-gray-500">
                               <span className="text-sm font-medium text-gray-900">
                                 {section.name}
                               </span>
-                              <span className="flex items-center ml-6 h-7">
+                              <span className="ml-6 flex h-7 items-center">
                                 <ChevronDownIcon
                                   className={classNames(
                                     open ? '-rotate-180' : 'rotate-0',
@@ -236,7 +236,7 @@ const CoursesPage = (
                                     checked={option.selected}
                                     defaultValue={option.id}
                                     type="checkbox"
-                                    className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                   />
                                   <label
                                     htmlFor={`${section.id}-${optionIdx}-mobile`}
@@ -258,8 +258,8 @@ const CoursesPage = (
           </Dialog>
         </Transition.Root>
 
-        <main className="max-w-2xl px-4 py-16 mx-auto sm:py-16 sm:px-6 lg:max-w-7xl lg:px-8">
-          <div className="pb-10 border-b border-gray-200">
+        <main className="mx-auto max-w-2xl px-4 py-16 sm:py-16 sm:px-6 lg:max-w-7xl lg:px-8">
+          <div className="border-b border-gray-200 pb-10">
             <h1 className="text-4xl font-extrabold tracking-tight text-gray-900">
               Formations
             </h1>
@@ -282,7 +282,7 @@ const CoursesPage = (
                   Filters
                 </span>
                 <PlusSmIcon
-                  className="flex-shrink-0 w-5 h-5 ml-1 text-gray-400"
+                  className="ml-1 h-5 w-5 flex-shrink-0 text-gray-400"
                   aria-hidden="true"
                 />
               </button>
@@ -298,7 +298,7 @@ const CoursesPage = (
                         <legend className="block text-sm font-medium text-gray-900">
                           {section.name}
                         </legend>
-                        <div className="pt-6 space-y-3">
+                        <div className="space-y-3 pt-6">
                           {section.options?.map((option, optionIdx) => (
                             <div key={option.id} className="flex items-center">
                               <input
@@ -308,7 +308,7 @@ const CoursesPage = (
                                 defaultValue={option.id}
                                 onChange={(e) => handleOptionsChange(e)}
                                 type="checkbox"
-                                className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                               />
                               <label
                                 htmlFor={`${section.id}-${optionIdx}`}
@@ -327,7 +327,7 @@ const CoursesPage = (
             </aside>
 
             {/* Product grid */}
-            <div className="mt-6 mb-10 lg:mt-0 lg:col-span-2 xl:col-span-3">
+            <div className="mt-6 mb-10 lg:col-span-2 lg:mt-0 xl:col-span-3">
               <CoursesGrid courses={courses} />
 
               <CoursesNavigation

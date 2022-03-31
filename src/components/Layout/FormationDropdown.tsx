@@ -25,9 +25,9 @@ const FormationDropdown = () => {
       onMouseLeave={() => setFormationMenuOpen(false)}
     >
       <>
-        <div className="inline-flex justify-center w-full">
+        <div className="inline-flex w-full justify-center">
           <Link href="/Courses/all">Nos Formations</Link>
-          <ChevronDownIcon className="w-5 h-5 ml-2 -mr-1" aria-hidden="true" />
+          <ChevronDownIcon className="ml-2 -mr-1 h-5 w-5" aria-hidden="true" />
         </div>
         <Transition
           as={Fragment}
@@ -39,11 +39,11 @@ const FormationDropdown = () => {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <div className="absolute top-0 left-0 z-10 w-48 py-1 mt-16 origin-top-right bg-white divide-y divide-gray-100 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <div className="absolute top-0 left-0 z-10 mt-16 w-48 origin-top-right divide-y divide-gray-100 bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             {categoryQuery.data?.map(({ id, name }) => (
               <div key={id}>
                 <Link href={`/Courses/${name}`}>
-                  <a className="block px-4 py-2 text-sm hover:text-gray-700 hover:bg-gray-100">
+                  <a className="block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-700">
                     {name}
                   </a>
                 </Link>

@@ -6,23 +6,23 @@ import { UsersIcon } from '@heroicons/react/outline';
 
 const CoursesGrid = ({ courses }: { courses: ResultItem[] }) => {
   return (
-    <div className="max-w-2xl px-4 mx-auto sm:px-6 lg:max-w-7xl lg:px-8">
+    <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
       <h2 className="sr-only">Courses</h2>
 
       <div className="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-3 lg:gap-x-8">
         {courses?.map((product) => (
           <div
             key={product.id}
-            className="relative flex flex-col overflow-hidden bg-white border border-gray-200 rounded-lg group"
+            className="group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white"
           >
-            <div className="bg-gray-200 aspect-w-4 aspect-h-4 group-hover:opacity-75 sm:aspect-none sm:h-48">
+            <div className="aspect-w-4 aspect-h-4 bg-gray-200 group-hover:opacity-75 sm:aspect-none sm:h-48">
               <img
                 src={product.thumbnail}
                 alt={product.name}
-                className="object-cover object-center w-full h-full sm:w-full sm:h-full"
+                className="h-full w-full object-cover object-center sm:h-full sm:w-full"
               />
             </div>
-            <div className="flex flex-col flex-1 p-4 space-y-2">
+            <div className="flex flex-1 flex-col space-y-2 p-4">
               <h3 className="flex items-center justify-between text-sm font-medium text-gray-900">
                 <Link href={`/Course/${product.id}`}>
                   <a href="">
@@ -36,18 +36,18 @@ const CoursesGrid = ({ courses }: { courses: ResultItem[] }) => {
               <p className="text-sm text-gray-500 line-clamp-2">
                 {product.description}
               </p>
-              <div className="flex flex-col justify-end flex-1">
+              <div className="flex flex-1 flex-col justify-end">
                 <div className="flex items-center justify-between">
                   <p className="text-sm italic text-gray-600">
                     {product.category.name}
                   </p>
                   <p className="flex items-center text-sm text-gray-500">
                     {product._count.enrolledUsers}
-                    <UsersIcon className="inline-block w-3 h-3 ml-1" />
+                    <UsersIcon className="ml-1 inline-block h-3 w-3" />
                   </p>
                 </div>
               </div>
-              <div className="flex items-center justify-between pt-2 border-t">
+              <div className="flex items-center justify-between border-t pt-2">
                 <p className="text-sm text-gray-700">
                   {product._count.reviews} reviews
                 </p>

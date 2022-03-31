@@ -1,5 +1,4 @@
 import { StarIcon } from '@heroicons/react/solid';
-import { RadioGroup } from '@headlessui/react';
 import { classNames } from 'utils/classNames';
 
 const product = {
@@ -51,7 +50,7 @@ export default function CoursePage() {
         <nav aria-label="Breadcrumb">
           <ol
             role="list"
-            className="flex items-center max-w-2xl px-4 mx-auto space-x-2 sm:px-6 lg:max-w-7xl lg:px-8"
+            className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
           >
             {product.breadcrumbs.map((breadcrumb) => (
               <li key={breadcrumb.id}>
@@ -69,7 +68,7 @@ export default function CoursePage() {
                     fill="currentColor"
                     xmlns="http://www.w3.org/2000/svg"
                     aria-hidden="true"
-                    className="w-4 h-5 text-gray-300"
+                    className="h-5 w-4 text-gray-300"
                   >
                     <path d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z" />
                   </svg>
@@ -89,18 +88,18 @@ export default function CoursePage() {
         </nav>
 
         {/* Image gallery */}
-        <div className="max-w-2xl mx-auto mt-6 sm:px-6 lg:max-w-7xl lg:px-8">
-          <div className="hidden overflow-hidden rounded-lg aspect-w-16 aspect-h-8 lg:block">
+        <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:max-w-7xl lg:px-8">
+          <div className="aspect-w-16 aspect-h-8 hidden overflow-hidden rounded-lg lg:block">
             <img
               src={product.images[0].src}
               alt={product.images[0].alt}
-              className="object-cover object-center w-full h-full"
+              className="h-full w-full object-cover object-center"
             />
           </div>
         </div>
 
         {/* Product info */}
-        <div className="max-w-2xl mx-auto pt-10 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:pt-16 lg:pb-24 lg:px-8 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8">
+        <div className="mx-auto max-w-2xl px-4 pt-10 pb-16 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pt-16 lg:pb-24">
           <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
             <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
               {product.name}
@@ -108,7 +107,7 @@ export default function CoursePage() {
           </div>
 
           {/* Options */}
-          <div className="mt-4 lg:mt-0 lg:row-span-3">
+          <div className="mt-4 lg:row-span-3 lg:mt-0">
             <h2 className="sr-only">Product information</h2>
             <p className="text-3xl text-gray-900">{product.price}</p>
 
@@ -147,7 +146,7 @@ export default function CoursePage() {
                 </h3>
 
                 <div className="mt-4">
-                  <div className="space-y-2 text-sm list-disc">
+                  <div className="list-disc space-y-2 text-sm">
                     <p className="text-base text-gray-600">
                       {product.description}
                     </p>
@@ -161,7 +160,7 @@ export default function CoursePage() {
                 </h3>
 
                 <div className="mt-4">
-                  <ul role="list" className="pl-4 space-y-2 text-sm list-disc">
+                  <ul role="list" className="list-disc space-y-2 pl-4 text-sm">
                     {product.highlights.map((highlight) => (
                       <li key={highlight} className="text-gray-400">
                         <span className="text-gray-600">{highlight}</span>
@@ -173,14 +172,14 @@ export default function CoursePage() {
 
               <button
                 type="submit"
-                className="flex items-center justify-center w-full px-8 py-3 mt-10 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
                 Add to bag
               </button>
             </form>
           </div>
 
-          <div className="py-10 lg:pt-6 lg:pb-16 lg:col-start-1 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
+          <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pt-6 lg:pb-16 lg:pr-8">
             <div className="mt-10">
               <h2 className="text-sm font-medium text-gray-900">Details</h2>
 
