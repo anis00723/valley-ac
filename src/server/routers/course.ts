@@ -130,6 +130,13 @@ export const courseRouter = createRouter()
         },
         include: {
           category: true,
+          reviews: true,
+          _count: {
+            select: {
+              enrolledUsers: true,
+              reviews: true,
+            },
+          },
         },
       });
     },

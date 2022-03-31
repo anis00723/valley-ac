@@ -15,20 +15,7 @@ import superjson from 'superjson';
 import { appRouter } from 'server/routers/_app';
 import CoursesNavigation from 'components/Courses/CoursesNavigation';
 import { ResultItem } from 'server/routers/course';
-
-const processCouses = (courses: ResultItem[] | undefined) => {
-  return (
-    courses?.map((course) => {
-      const avgRating =
-        course.reviews.reduce((acc, review) => acc + review.rating, 0) /
-        course.reviews.length;
-      return {
-        ...course,
-        avgRating,
-      };
-    }) || []
-  );
-};
+import processCouses from 'utils/processCourses';
 
 const CoursesPage = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>,
