@@ -7,10 +7,11 @@ import Footer from './Footer';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { isExactPath } from 'utils/pathHelpers';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
-type DefaultLayoutProps = { children: ReactNode };
+type AdminLayoutProps = { children: ReactNode };
 
-export const AppLayout = ({ children }: DefaultLayoutProps) => {
+export const AppLayout = ({ children }: AdminLayoutProps) => {
   const router = useRouter();
   const activeRouter = router.pathname;
 
@@ -176,6 +177,10 @@ export const AppLayout = ({ children }: DefaultLayoutProps) => {
         )}
       </Disclosure>
       <main>{children}</main>
+
+      {process.env.NODE_ENV !== 'production' && (
+        <ReactQueryDevtools initialIsOpen={false} />
+      )}
       <Footer />
     </>
   );

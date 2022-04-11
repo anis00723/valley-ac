@@ -14,7 +14,6 @@ import { createContext } from 'server/context';
 import superjson from 'superjson';
 import { appRouter } from 'server/routers/_app';
 import CoursesNavigation from 'components/Courses/CoursesNavigation';
-import { ResultItem } from 'server/routers/course';
 import processCouses from 'utils/processCourses';
 
 const CoursesPage = (
