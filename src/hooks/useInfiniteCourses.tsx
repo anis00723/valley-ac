@@ -34,6 +34,14 @@ export const useInfiniteCourses = (
     },
   );
 
+  const [hasNextPage, setHasNextPage] = useState(
+    coursesQuery.data?.pages[pageIndex]?.nextCursor !== null,
+  );
+
+  useEffect(() => {
+    setHasNextPage(coursesQuery.data?.pages[pageIndex]?.nextCursor !== null);
+  }, [coursesQuery.data?.pages, pageIndex]);
+
   const [courses, setCourses] = useState(() =>
     processCourses(coursesQuery.data?.pages[pageIndex]?.result.items),
   );
@@ -93,8 +101,6 @@ export const useInfiniteCourses = (
     setPageIndex((pageIndex) => pageIndex - 1);
     scrollToTop();
   };
-
-  const hasNextPage = coursesQuery.data?.pages[pageIndex]?.nextCursor !== null;
 
   return {
     courses,
