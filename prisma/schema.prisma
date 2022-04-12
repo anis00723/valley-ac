@@ -48,7 +48,6 @@ model Course {
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId String
 
-
   // To return `Date`s intact through the API we need to add data transformers
   // https://trpc.io/docs/data-transformers
   createdAt DateTime @default(now())
