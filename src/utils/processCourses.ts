@@ -1,6 +1,6 @@
 import { ResultItem } from 'server/routers/course';
 
-const processCouses = (courses: ResultItem[] | undefined) => {
+const processCourses = (courses: ResultItem[] | undefined) => {
   return (
     courses?.map((course) => {
       const avgRating =
@@ -14,4 +14,4 @@ const processCouses = (courses: ResultItem[] | undefined) => {
   );
 };
 
-export default processCouses;
+export default processCourses;

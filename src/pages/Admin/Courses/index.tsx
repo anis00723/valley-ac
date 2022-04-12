@@ -8,79 +8,20 @@ import {
 import CoursesNavigation from 'components/Courses/CoursesNavigation';
 import AdminLayout from 'components/Layout/AdminLayout';
 import { NextPageWithLayout } from 'pages/_app';
-import React, { useCallback, useEffect, useState } from 'react';
 import StarRatings from 'react-star-ratings';
-import processCouses from 'utils/processCourses';
-import { trpc } from 'utils/trpc';
+import { useInfiniteCourses } from 'hooks';
 
 const CoursesAdminPage: NextPageWithLayout = () => {
-  const [pageIndex, setPageIndex] = useState(0);
-  const coursesQuery = trpc.useInfiniteQuery(['course.all', {}], {
-    getNextPageParam: (lastPage) => lastPage.nextCursor,
-  });
-
-  const [firstElementIndex, setFirstElementIndex] = useState(0);
-  const [lastElementIndex, setLastElementIndex] = useState(0);
-
-  const [courses, setCourses] = useState(() =>
-    processCouses(coursesQuery.data?.pages[pageIndex]?.result.items),
-  );
-
-  const [count, setCount] = useState(
-    coursesQuery.data?.pages[pageIndex]?.result.count || 0,
-  );
-
-  const replaceCourses = useCallback((newCourses) => {
-    setCourses(newCourses);
-  }, []);
-
-  useEffect(() => {
-    const courses = processCouses(
-      coursesQuery.data?.pages[pageIndex]?.result.items,
-    );
-    const count = coursesQuery.data?.pages[pageIndex]?.result.count || 0;
-    replaceCourses(courses);
-    setCount(count);
-  }, [coursesQuery.data?.pages, pageIndex, replaceCourses]);
-
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-      /* you can also use 'auto' behaviour
-         in place of 'smooth' */
-    });
-  };
-
-  const handleNextPage = async () => {
-    setPageIndex((pageIndex) => pageIndex + 1);
-    await coursesQuery.fetchNextPage();
-    scrollToTop();
-  };
-
-  const handlePreviousPage = async () => {
-    setPageIndex((pageIndex) => pageIndex - 1);
-    await coursesQuery.fetchPreviousPage();
-    scrollToTop();
-  };
-
-  useEffect(() => {
-    setFirstElementIndex(() => {
-      if (pageIndex === 0) {
-        return 1;
-      }
-      return (
-        pageIndex *
-          // @ts-ignore
-          coursesQuery?.data?.pages[pageIndex - 1]?.result?.items?.length +
-        1
-      );
-    });
-  }, [pageIndex, coursesQuery.data?.pages, courses.length]);
-
-  useEffect(() => {
-    setLastElementIndex(firstElementIndex + courses.length - 1);
-  }, [firstElementIndex, courses]);
+  const {
+    courses,
+    count,
+    handleNextPage,
+    handlePreviousPage,
+    firstElementIndex,
+    lastElementIndex,
+    hasNextPage,
+    pageIndex,
+  } = useInfiniteCourses();
 
   return (
     <>
@@ -170,7 +111,7 @@ const CoursesAdminPage: NextPageWithLayout = () => {
         onPreviousPage={handlePreviousPage}
         firstElementIndex={firstElementIndex}
         lastElementIndex={lastElementIndex}
-        hasNextPage={coursesQuery.data?.pages[pageIndex]?.nextCursor !== null}
+        hasNextPage={hasNextPage}
         pageIndex={pageIndex}
       />
     </>

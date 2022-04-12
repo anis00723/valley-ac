@@ -1,18 +1,18 @@
 import { UsersIcon } from '@heroicons/react/outline';
 import { useEffect, useState } from 'react';
 import StarRatings from 'react-star-ratings';
-import processCouses from 'utils/processCourses';
+import processCourses from 'utils/processCourses';
 import { trpc } from 'utils/trpc';
 
 export default function FeaturedCourses() {
   const featuredCoursesQuery = trpc.useQuery(['course.featured']);
 
   const [courses, setCourses] = useState(() =>
-    processCouses(featuredCoursesQuery.data),
+    processCourses(featuredCoursesQuery.data),
   );
 
   useEffect(() => {
-    const processedCourses = processCouses(featuredCoursesQuery.data);
+    const processedCourses = processCourses(featuredCoursesQuery.data);
     setCourses(processedCourses);
   }, [featuredCoursesQuery.data]);
 

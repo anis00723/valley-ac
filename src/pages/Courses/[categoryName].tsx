@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
-
+import React, { useEffect } from 'react';
 import { createSSGHelpers } from '@trpc/react/ssg';
 import { Fragment, useState } from 'react';
 import { Dialog, Disclosure, Transition } from '@headlessui/react';
@@ -14,7 +13,7 @@ import { createContext } from 'server/context';
 import superjson from 'superjson';
 import { appRouter } from 'server/routers/_app';
 import CoursesNavigation from 'components/Courses/CoursesNavigation';
-import processCouses from 'utils/processCourses';
+import { useInfiniteCourses } from '../../hooks';
 
 const CoursesPage = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>,
@@ -22,7 +21,6 @@ const CoursesPage = (
   const { categoryIds } = props;
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [userSelectedCategory, setUserSelectedCategory] = useState(false);
-
   const filters = useCoursesStore((store) => store.filters);
   const addOption = useCoursesStore((store) => store.addOption);
   const toggleOptionSelect = useCoursesStore(
@@ -31,45 +29,6 @@ const CoursesPage = (
   const setOneOptionSelected = useCoursesStore(
     (store) => store.setOneOptionSelected,
   );
-
-  const selectedOptionsIds = useCallback(
-    (filterId: string) =>
-      (filters.find((filter) => filter.id === filterId)?.options || [])
-        .filter((option) => option.selected)
-        .map((option) => option.id),
-    [filters],
-  );
-
-  const coursesQuery = trpc.useInfiniteQuery(
-    [
-      'course.all',
-      {
-        categoryIds: userSelectedCategory
-          ? selectedOptionsIds('category')
-          : categoryIds,
-      },
-    ],
-    {
-      getNextPageParam: (lastPage) => lastPage.nextCursor,
-    },
-  );
-
-  const [pageIndex, setPageIndex] = useState(0);
-
-  const [courses, setCourses] = useState(() =>
-    processCouses(coursesQuery.data?.pages[pageIndex]?.result.items),
-  );
-
-  const [count, setCount] = useState(
-    coursesQuery.data?.pages[pageIndex]?.result.count || 0,
-  );
-
-  const [firstElementIndex, setFirstElementIndex] = useState(0);
-  const [lastElementIndex, setLastElementIndex] = useState(0);
-
-  const replaceCourses = useCallback((newCourses) => {
-    setCourses(newCourses);
-  }, []);
 
   const categoryQuery = trpc.useQuery(['category.all']);
 
@@ -85,59 +44,23 @@ const CoursesPage = (
     });
   }, [categoryIds, setOneOptionSelected]);
 
-  useEffect(() => {
-    const courses = processCouses(
-      coursesQuery.data?.pages[pageIndex]?.result.items,
-    );
-    const count = coursesQuery.data?.pages[pageIndex]?.result.count || 0;
-    replaceCourses(courses);
-    setCount(count);
-  }, [coursesQuery.data?.pages, pageIndex, replaceCourses]);
-
-  useEffect(() => {
-    setFirstElementIndex(() => {
-      if (pageIndex === 0) {
-        return 1;
-      }
-      return (
-        pageIndex *
-          // @ts-ignore
-          coursesQuery?.data?.pages[pageIndex - 1]?.result?.items?.length +
-        1
-      );
-    });
-  }, [pageIndex, coursesQuery.data?.pages, courses.length]);
-
-  useEffect(() => {
-    setLastElementIndex(firstElementIndex + courses.length - 1);
-  }, [firstElementIndex, courses]);
-
   const handleOptionsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     toggleOptionSelect('category', e.target.value);
     setPageIndex(0);
     setUserSelectedCategory(true);
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-      /* you can also use 'auto' behaviour
-         in place of 'smooth' */
-    });
-  };
-
-  const handleNextPage = async () => {
-    setPageIndex((pageIndex) => pageIndex + 1);
-    await coursesQuery.fetchNextPage();
-    scrollToTop();
-  };
-
-  const handlePreviousPage = async () => {
-    setPageIndex((pageIndex) => pageIndex - 1);
-    await coursesQuery.fetchPreviousPage();
-    scrollToTop();
-  };
+  const {
+    courses,
+    count,
+    handleNextPage,
+    handlePreviousPage,
+    firstElementIndex,
+    lastElementIndex,
+    hasNextPage,
+    setPageIndex,
+    pageIndex,
+  } = useInfiniteCourses(userSelectedCategory, categoryIds);
 
   return (
     <div className="bg-white">
@@ -322,9 +245,7 @@ const CoursesPage = (
                 onPreviousPage={handlePreviousPage}
                 firstElementIndex={firstElementIndex}
                 lastElementIndex={lastElementIndex}
-                hasNextPage={
-                  coursesQuery.data?.pages[pageIndex]?.nextCursor !== null
-                }
+                hasNextPage={hasNextPage}
                 pageIndex={pageIndex}
               />
             </div>
