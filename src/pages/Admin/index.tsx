@@ -9,6 +9,8 @@ const AdminViewPage: NextPageWithLayout = () => {
   );
 };
 
-AdminViewPage.getLayout = (page) => <AdminLayout>{page}</AdminLayout>;
+AdminViewPage.getLayout = (page) => (
+  <AdminLayout pageName="Dashboard">{page}</AdminLayout>
+);
 
 export default AdminViewPage;

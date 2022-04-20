@@ -10,6 +10,8 @@ const UsersAdminPage: NextPageWithLayout = () => {
   );
 };
 
-UsersAdminPage.getLayout = (page) => <AdminLayout>{page}</AdminLayout>;
+UsersAdminPage.getLayout = (page) => (
+  <AdminLayout pageName="Users">{page}</AdminLayout>
+);
 
 export default UsersAdminPage;

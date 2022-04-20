@@ -178,9 +178,15 @@ export const courseRouter = createRouter()
       price: z.number().positive(),
       thumbnail: z.string().min(1),
       categoryId: z.string().uuid(),
+      description: z.string().min(1),
+      featured: z.boolean(),
+      published: z.boolean(),
+      content: z.string().min(1),
     }),
     async resolve({ input }) {
       const { id } = input;
+
+      console.log(input);
       const course = await prisma.course.findUnique({
         where: {
           id,

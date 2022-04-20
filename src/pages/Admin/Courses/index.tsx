@@ -124,6 +124,8 @@ const CoursesAdminPage: NextPageWithLayout = () => {
   );
 };
 
-CoursesAdminPage.getLayout = (page) => <AdminLayout>{page}</AdminLayout>;
+CoursesAdminPage.getLayout = (page) => (
+  <AdminLayout pageName={'Courses'}>{page}</AdminLayout>
+);
 
 export default CoursesAdminPage;

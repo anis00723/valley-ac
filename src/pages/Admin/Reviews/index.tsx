@@ -10,6 +10,8 @@ const ReviewsAdminPage: NextPageWithLayout = () => {
   );
 };
 
-ReviewsAdminPage.getLayout = (page) => <AdminLayout>{page}</AdminLayout>;
+ReviewsAdminPage.getLayout = (page) => (
+  <AdminLayout pageName="Reviews">{page}</AdminLayout>
+);
 
 export default ReviewsAdminPage;

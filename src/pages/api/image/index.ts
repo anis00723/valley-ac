@@ -70,7 +70,8 @@ const post = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.send({
       success: true,
       filePath: `${getBaseUrl()}/api/image/${dbFile.storedFileName}`,
-      fileName: dbFile.originalFileName,
+      fileName: dbFile.storedFileName,
+      location: dbFile.path,
     });
   });
 };
