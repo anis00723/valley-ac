@@ -41,6 +41,9 @@ model Course {
   description String   @default("") @db.Text
   reviews     Review[]
   featured    Boolean  @default(false)
+  published   Boolean  @default(false)
+
+  content String @db.Text @default("")
 
   // Relations
   enrolledUsers User[]
@@ -48,8 +51,24 @@ model Course {
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId String
 
+  Module Module[]
+
   // To return `Date`s intact through the API we need to add data transformers
   // https://trpc.io/docs/data-transformers
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Module {
+  id            String @id @default(uuid())
+  name          String
+  description   String @default("") @db.Text
+  pdfFilePath   String
+  audioFilePath String
+
+  course   Course @relation(fields: [courseId], references: [id])
+  courseId String
+
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 }
@@ -70,6 +89,17 @@ model Category {
   name      String   @unique
   Courses   Course[]
   thumbnail String
+
+  // To return `Date`s intact through the API we need to add data transformers
+  // https://trpc.io/docs/data-transformers
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Image {
+  storedFileName   String @id @default(cuid())
+  originalFileName String
+  path             String
 
   // To return `Date`s intact through the API we need to add data transformers
   // https://trpc.io/docs/data-transformers

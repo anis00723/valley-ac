@@ -12,21 +12,15 @@ export const categoryRouter = createRouter()
       thumbnail: z.string().min(1),
     }),
     async resolve({ input }) {
-      const category = await prisma.category.create({
+      return await prisma.category.create({
         data: input,
       });
-      return category;
     },
   })
   // read
   .query('all', {
     async resolve() {
-      /**
-       * For pagination you can have a look at this docs site
-       * @link https://trpc.io/docs/useInfiniteQuery
-       */
-
-      return prisma.category.findMany({});
+      return await prisma.category.findMany({});
     },
   })
   // get by id

@@ -1,4 +1,5 @@
 import { Category, Course, Review } from '@prisma/client';
+import { TRPCError } from '@trpc/server';
 import { createRouter } from 'server/createRouter';
 import { prisma } from 'server/prisma';
 import { z } from 'zod';
@@ -29,10 +30,9 @@ export const courseRouter = createRouter()
       categoryId: z.string().uuid(),
     }),
     async resolve({ input }) {
-      const course = await prisma.course.create({
+      return await prisma.course.create({
         data: input,
       });
-      return course;
     },
   })
   // read
@@ -75,15 +75,13 @@ export const courseRouter = createRouter()
           },
         });
 
-        const count = await prisma.course.count({
+        result.count = await prisma.course.count({
           where: {
             categoryId: {
               in: input.categoryIds,
             },
           },
         });
-
-        result.count = count;
         result.items = items;
       } else {
         items = await prisma.course.findMany({
@@ -104,8 +102,7 @@ export const courseRouter = createRouter()
           },
         });
 
-        const count = await prisma.course.count();
-        result.count = count;
+        result.count = await prisma.course.count();
         result.items = items;
       }
 
@@ -138,6 +135,70 @@ export const courseRouter = createRouter()
             },
           },
         },
+      });
+    },
+  })
+  // read one
+  .query('one', {
+    input: z.object({
+      id: z.string().uuid(),
+    }),
+    async resolve({ input }) {
+      const { id } = input;
+      const course = await prisma.course.findUnique({
+        where: {
+          id,
+        },
+        include: {
+          category: true,
+          reviews: true,
+          _count: {
+            select: {
+              enrolledUsers: true,
+              reviews: true,
+            },
+          },
+        },
+      });
+
+      if (!course) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: `No course with id '${id}'`,
+        });
+      }
+      return course;
+    },
+  })
+  // update
+  .mutation('update', {
+    input: z.object({
+      id: z.string().uuid(),
+      name: z.string().min(1).max(64),
+      price: z.number().positive(),
+      thumbnail: z.string().min(1),
+      categoryId: z.string().uuid(),
+    }),
+    async resolve({ input }) {
+      const { id } = input;
+      const course = await prisma.course.findUnique({
+        where: {
+          id,
+        },
+      });
+
+      if (!course) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: `No course with id '${id}'`,
+        });
+      }
+
+      return await prisma.course.update({
+        where: {
+          id,
+        },
+        data: input,
       });
     },
   });

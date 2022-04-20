@@ -14,7 +14,7 @@ export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
 
-type AppPropsWithLayout = AppProps & {
+export type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
@@ -25,7 +25,7 @@ const MyApp = (({ Component, pageProps }: AppPropsWithLayout) => {
   return getLayout(<Component {...pageProps} />);
 }) as AppType;
 
-function getBaseUrl() {
+export function getBaseUrl() {
   if (process.browser) {
     return '';
   }

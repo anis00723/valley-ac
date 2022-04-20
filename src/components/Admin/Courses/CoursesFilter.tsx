@@ -36,7 +36,7 @@ const CoursesFilter = () => {
     options.filter((option) => option.selected).length;
 
   return (
-    <div className="bg-gray-50">
+    <div className="rounded-md bg-gray-50">
       {/* Mobile filter dialog */}
       <Transition.Root show={open} as={Fragment}>
         <Dialog
@@ -146,7 +146,7 @@ const CoursesFilter = () => {
 
           <div className="flex items-center justify-between">
             {/* !Sort manu */}
-            <Menu as="div" className="relative z-10 inline-block text-left">
+            <Menu as="div" className="relative inline-block text-left">
               <div>
                 <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
                   Sort
@@ -203,7 +203,7 @@ const CoursesFilter = () => {
                             <input
                               id={`filter-${section.id}-${optionIdx}`}
                               name={`${section.id}[]`}
-                              defaultValue={option.id}
+                              value={option.id}
                               checked={option.selected}
                               onChange={(e) => handleOptionsChange(e)}
                               type="checkbox"
