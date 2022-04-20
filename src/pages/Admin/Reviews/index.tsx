@@ -11,7 +11,11 @@ const ReviewsAdminPage: NextPageWithLayout = () => {
 };
 
 ReviewsAdminPage.getLayout = (page) => (
-  <AdminLayout pageName="Reviews">{page}</AdminLayout>
+  <AdminLayout
+    pages={[{ name: 'Reviews', href: '/Admin/Reviews', current: true }]}
+  >
+    {page}
+  </AdminLayout>
 );
 
 export default ReviewsAdminPage;

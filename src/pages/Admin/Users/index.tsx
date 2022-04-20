@@ -11,7 +11,9 @@ const UsersAdminPage: NextPageWithLayout = () => {
 };
 
 UsersAdminPage.getLayout = (page) => (
-  <AdminLayout pageName="Users">{page}</AdminLayout>
+  <AdminLayout pages={[{ name: 'Users', href: '/Admin/Users', current: true }]}>
+    {page}
+  </AdminLayout>
 );
 
 export default UsersAdminPage;

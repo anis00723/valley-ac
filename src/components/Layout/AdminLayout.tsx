@@ -15,6 +15,7 @@ import Link from 'next/link';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { useRouter } from 'next/router';
 import { isExactPath } from 'utils/pathHelpers';
+import Breadcrumbs from 'components/Admin/Breadcrumbs';
 
 const navigation = [
   { name: 'Dashboard', href: '/Admin', icon: HomeIcon },
@@ -40,10 +41,10 @@ const userNavigation = [
 
 type AdminLayoutProps = {
   children: React.ReactNode;
-  pageName: string;
+  pages: { name: string; href: string; current: boolean }[];
 };
 
-const AdminLayout = ({ children, pageName }: AdminLayoutProps) => {
+const AdminLayout = ({ children, pages }: AdminLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const router = useRouter();
   const activePath = router.pathname;
@@ -256,9 +257,10 @@ const AdminLayout = ({ children, pageName }: AdminLayoutProps) => {
           <main className="flex-1">
             <div className="py-6">
               <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-                <h1 className="text-2xl font-semibold text-gray-900">
+                {/* <h1 className="text-2xl font-semibold text-gray-900">
                   {pageName}
-                </h1>
+                </h1> */}
+                <Breadcrumbs pages={pages} />
               </div>
               <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
                 {/* Replace with your content */}

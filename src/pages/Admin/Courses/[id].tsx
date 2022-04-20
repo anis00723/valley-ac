@@ -494,7 +494,14 @@ const CoursesDetailAdminPage = (
 };
 
 CoursesDetailAdminPage.getLayout = (page: ReactElement) => (
-  <AdminLayout pageName={'Courses'}>{page}</AdminLayout>
+  <AdminLayout
+    pages={[
+      { name: 'Courses', href: '/Admin/Courses', current: false },
+      { name: 'Update', href: '#', current: true },
+    ]}
+  >
+    {page}
+  </AdminLayout>
 );
 
 export default CoursesDetailAdminPage;
