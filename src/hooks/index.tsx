@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 import { useInfiniteCourses } from './useInfiniteCourses';
+import useDebounce from './useDebounce';
 
 export const useToggle = (initialState = false) => {
   // Initialize the state
@@ -12,4 +13,4 @@ export const useToggle = (initialState = false) => {
   return [state, toggle];
 };
 
-export { useInfiniteCourses };
+export { useInfiniteCourses, useDebounce };

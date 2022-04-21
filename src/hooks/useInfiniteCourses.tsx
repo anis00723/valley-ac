@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { trpc } from '../utils/trpc';
 import processCourses from '../utils/processCourses';
 import { useCoursesStore } from 'store/CoursesStore';
+import { useDebounce } from 'hooks';
 
 export const useInfiniteCourses = (
   userSelectedCategory?: boolean,
@@ -10,6 +11,8 @@ export const useInfiniteCourses = (
   const [pageIndex, setPageIndex] = useState(0);
   const [firstElementIndex, setFirstElementIndex] = useState(0);
   const [lastElementIndex, setLastElementIndex] = useState(0);
+  const [query, setQuery] = useState(undefined);
+  const debouncedQuery = useDebounce<string | undefined>(query, 500);
   const filters = useCoursesStore((store) => store.filters);
 
   const selectedOptionsIds = useCallback(
@@ -27,6 +30,7 @@ export const useInfiniteCourses = (
         categoryIds: userSelectedCategory
           ? selectedOptionsIds('category')
           : categoryIds,
+        query: debouncedQuery,
       },
     ],
     {
@@ -112,5 +116,7 @@ export const useInfiniteCourses = (
     hasNextPage,
     setPageIndex,
     pageIndex,
+    query,
+    setQuery,
   };
 };

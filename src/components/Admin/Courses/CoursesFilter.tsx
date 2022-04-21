@@ -1,18 +1,18 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import {
-  Dialog,
-  Disclosure,
-  Menu,
-  Popover,
-  Transition,
-} from '@headlessui/react';
-import { XIcon } from '@heroicons/react/outline';
+import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react';
+import { SearchIcon, XIcon } from '@heroicons/react/outline';
 import { ChevronDownIcon } from '@heroicons/react/solid';
 import { classNames } from 'utils/classNames';
 import { Category, useCoursesStore } from '../../../store/CoursesStore';
 import { trpc } from '../../../utils/trpc';
 
-const CoursesFilter = () => {
+const CoursesFilter = ({
+  query,
+  setQuery,
+}: {
+  query: string | undefined;
+  setQuery: React.Dispatch<React.SetStateAction<any>>;
+}) => {
   const [open, setOpen] = useState(false);
   const filters = useCoursesStore((store) => store.filters);
   const addOption = useCoursesStore((store) => store.addOption);
@@ -41,7 +41,7 @@ const CoursesFilter = () => {
       <Transition.Root show={open} as={Fragment}>
         <Dialog
           as="div"
-          className="fixed inset-0 z-40 flex sm:hidden"
+          className="fixed inset-0 flex sm:hidden"
           onClose={setOpen}
         >
           <Transition.Child
@@ -146,7 +146,7 @@ const CoursesFilter = () => {
 
           <div className="flex items-center justify-between">
             {/* !Sort manu */}
-            <Menu as="div" className="relative inline-block text-left">
+            {/* <Menu as="div" className="relative inline-block text-left">
               <div>
                 <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
                   Sort
@@ -156,7 +156,27 @@ const CoursesFilter = () => {
                   />
                 </Menu.Button>
               </div>
-            </Menu>
+            </Menu> */}
+
+            <div className="flex flex-1 items-center">
+              <div className="relative">
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center">
+                  <SearchIcon
+                    className="ml-2 h-5 w-5 text-gray-400"
+                    aria-hidden="true"
+                  />
+                </div>
+                <input
+                  type="search"
+                  placeholder="Search"
+                  value={query || ''}
+                  onChange={(e) => setQuery(e.target.value)}
+                  className="focus:shadow-outline-blue block w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-3 leading-5 transition duration-150 ease-in-out focus:z-10 focus:border-blue-300 focus:outline-none sm:text-sm"
+                />
+              </div>
+            </div>
+
+            {/* Search field */}
 
             <button
               type="button"
@@ -172,7 +192,7 @@ const CoursesFilter = () => {
                   as="div"
                   key={section.name}
                   id="desktop-menu"
-                  className="relative z-10 inline-block text-left"
+                  className="relative inline-block text-left"
                 >
                   <Popover.Button className="group inline-flex items-center justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
                     <span>{section.name}</span>

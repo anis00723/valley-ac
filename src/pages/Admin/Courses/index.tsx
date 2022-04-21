@@ -23,11 +23,13 @@ const CoursesAdminPage: NextPageWithLayout = () => {
     lastElementIndex,
     hasNextPage,
     pageIndex,
+    query,
+    setQuery,
   } = useInfiniteCourses(true);
 
   return (
     <>
-      <CoursesFilter />
+      <CoursesFilter query={query} setQuery={setQuery} />
 
       <div className="overflow-hidden bg-white shadow sm:rounded-md">
         <ul role="list" className="divide-y divide-gray-200">
