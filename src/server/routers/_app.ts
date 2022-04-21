@@ -2,6 +2,7 @@
  * This file contains the root router of your tRPC-backend
  */
 import superjson from 'superjson';
+import { ZodError } from 'zod';
 import { createRouter } from '../createRouter';
 import { categoryRouter } from './category';
 import { courseRouter } from './course';
@@ -23,7 +24,18 @@ export const appRouter = createRouter()
    * Optionally do custom error (type safe!) formatting
    * @link https://trpc.io/docs/error-formatting
    */
-  // .formatError(({ shape, error }) => { })
+  .formatError(({ shape, error }) => {
+    return {
+      ...shape,
+      data: {
+        ...shape.data,
+        zodError:
+          error.code === 'BAD_REQUEST' && error.cause instanceof ZodError
+            ? error.cause.flatten()
+            : null,
+      },
+    };
+  })
   /**
    * Add a health check endpoint to be called with `/api/trpc/healthz`
    */

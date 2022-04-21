@@ -783,6 +783,11 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
+"@jsdevtools/humanize-anything@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@jsdevtools/humanize-anything/-/humanize-anything-1.1.1.tgz#f00e1addbe54f1a52da3ed6c4fe9bc1af669bff7"
+  integrity sha512-bsEon8edwiGjP5YBCDRSxa4EPvzFMNEu1WZhgBlrIj5La8Hi4iBNf+tApKvsRKrJwxqLuBLAffuaF66U1bzxnw==
+
 "@next/env@12.1.0":
   version "12.1.0"
   resolved "https://registry.npmjs.org/@next/env/-/env-12.1.0.tgz"

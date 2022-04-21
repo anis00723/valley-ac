@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { CheckIcon } from '@heroicons/react/outline';
 
-export default function SuccessDialog(props: {
+export default function SuccessModal(props: {
   open: boolean;
   title: string;
   message: string;
