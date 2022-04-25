@@ -23,11 +23,14 @@ export const courseRouter = createRouter()
   // create
   .mutation('add', {
     input: z.object({
-      id: z.string().uuid().optional(),
       name: z.string().min(1).max(64),
       price: z.number().positive(),
       thumbnail: z.string().min(1),
       categoryId: z.string().uuid(),
+      description: z.string().min(1),
+      featured: z.boolean(),
+      published: z.boolean(),
+      content: z.string().min(1),
     }),
     async resolve({ input }) {
       return await prisma.course.create({

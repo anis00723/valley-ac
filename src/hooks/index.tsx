@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 import { useInfiniteCourses } from './useInfiniteCourses';
+import { useCourseInputForm } from './useCourseInputForm';
 import useDebounce from './useDebounce';
 
 export const useToggle = (initialState = false) => {
@@ -13,4 +14,4 @@ export const useToggle = (initialState = false) => {
   return [state, toggle];
 };
 
-export { useInfiniteCourses, useDebounce };
+export { useInfiniteCourses, useCourseInputForm, useDebounce };

@@ -1,6 +1,6 @@
 import AdminLayout from 'components/Layout/AdminLayout';
 import { trpc } from '../../../utils/trpc';
-import { ReactElement, useEffect, useState } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { createSSGHelpers } from '@trpc/react/ssg';
 import { createContext } from 'server/context';
@@ -9,9 +9,14 @@ import { appRouter } from 'server/routers/_app';
 import { useRouter } from 'next/router';
 import SuccessModal from 'components/Admin/Courses/SuccessModal';
 import ErrorModal from 'components/Admin/Courses/ErrorModal';
-import humanize from '@jsdevtools/humanize-anything';
-import { capitalize } from 'utils/capitalize';
 import CourseInputForm from 'components/Admin/Courses/CourseInputForm';
+import Breadcrumbs from 'components/Admin/Breadcrumbs';
+import { useCourseInputForm } from 'hooks';
+
+const pages = [
+  { name: 'Courses', href: '/Admin/Courses', current: false },
+  { name: 'Update', href: '#', current: true },
+];
 
 const CoursesDetailAdminPage = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>,
@@ -26,103 +31,33 @@ const CoursesDetailAdminPage = (
     },
   ]);
 
-  const categoryQuery = trpc.useQuery(['category.all']);
-
-  const [successModalOpen, setSuccessModalOpen] = useState(false);
-  const [errorModalOpen, setErrorModalOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
   const course = courseQuery?.data ? courseQuery.data : null;
-  const categories = categoryQuery.data ? categoryQuery.data : null;
+  const courseMutation = trpc.useMutation(['course.update']);
 
-  const [selectedCategory, setSelectedCategory] = useState(course?.category);
-  const [thumbnail, setThumbnail] = useState(course?.thumbnail);
-
-  const [formState, setFormState] = useState({
-    name: course?.name,
-    description: course?.description,
-    price: course?.price,
-    featured: course?.featured,
-    published: course?.published,
-  });
-  const [editorValue, setEditorValue] = useState(course?.content);
-  useEffect(() => setEditorValue(course?.content), [course?.content]);
-
-  const handleChange = (e: any) => {
-    const value =
-      e.target.type === 'checkbox'
-        ? e.target.checked
-        : e.target.type === 'number'
-        ? parseFloat(e.target.value)
-        : e.target.value;
-    setFormState({
-      ...formState,
-      [e.target.name]: value,
-    });
-  };
-
-  const onThumbnailDrop = async (acceptedFiles: File[]) => {
-    const body = new FormData();
-    body.append('file', acceptedFiles[0]);
-    const response = await fetch('/api/image', {
-      method: 'POST',
-      body,
-    });
-    const { filePath } = await response.json();
-
-    setThumbnail(filePath);
-  };
+  const {
+    handleSubmit,
+    handleChange,
+    onThumbnailDrop,
+    formState,
+    categories,
+    selectedCategory,
+    setSelectedCategory,
+    thumbnail,
+    editorValue,
+    setEditorValue,
+    successModalOpen,
+    setSuccessModalOpen,
+    errorModalOpen,
+    setErrorModalOpen,
+    errorMessage,
+    // @ts-ignore
+  } = useCourseInputForm(course, courseMutation);
 
   useEffect(() => {
     if (!id) {
       router.push('/Admin/Courses');
     }
   }, [id, router]);
-
-  useEffect(() => {
-    if (course) {
-      setSelectedCategory(course.category);
-    }
-  }, [course]);
-
-  const courseMutation = trpc.useMutation(['course.update']);
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    courseMutation.mutate({
-      id: id as string,
-      name: formState.name || '',
-      description: formState.description || '',
-      price: formState.price || 0,
-      featured: formState.featured || false,
-      published: formState.published || false,
-      categoryId: selectedCategory?.id || '',
-      thumbnail: thumbnail || '',
-      content: editorValue || '',
-    });
-  };
-
-  useEffect(() => {
-    if (courseMutation.isSuccess) {
-      setSuccessModalOpen(true);
-      courseMutation.reset();
-    }
-
-    if (courseMutation.isError) {
-      setErrorModalOpen(true);
-      const zodError = courseMutation.error?.data?.zodError;
-      if (zodError) {
-        const fields = Object.keys(zodError.fieldErrors).map((key) =>
-          capitalize(key),
-        );
-        const huminizedFields = humanize.list(fields);
-
-        const errorMessage = `${huminizedFields} ${
-          fields.length > 1 ? 'are' : 'is'
-        } wrong, please make sure you provided all the required fields`;
-        setErrorMessage(errorMessage);
-      }
-      courseMutation.reset();
-    }
-  }, [courseMutation]);
 
   const handleCancel = () => {
     router.push('/Admin/Courses');
@@ -135,6 +70,10 @@ const CoursesDetailAdminPage = (
 
   return (
     <>
+      <div className="mb-6 mt-4">
+        <Breadcrumbs pages={pages} />
+      </div>
+
       <SuccessModal
         open={successModalOpen}
         title={'Successfuly Saved'}
@@ -168,18 +107,11 @@ const CoursesDetailAdminPage = (
   );
 };
 
-CoursesDetailAdminPage.getLayout = (page: ReactElement) => (
-  <AdminLayout
-    pages={[
-      { name: 'Courses', href: '/Admin/Courses', current: false },
-      { name: 'Update', href: '#', current: true },
-    ]}
-  >
-    {page}
-  </AdminLayout>
-);
-
 export default CoursesDetailAdminPage;
+
+CoursesDetailAdminPage.getLayout = (page: ReactElement) => (
+  <AdminLayout>{page}</AdminLayout>
+);
 
 export async function getServerSideProps(
   context: GetServerSidePropsContext<{ id: string }>,

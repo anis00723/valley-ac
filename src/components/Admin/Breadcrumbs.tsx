@@ -5,7 +5,7 @@ export default function Breadcrumbs(props: {
   pages: { name: string; href: string; current: boolean }[];
 }) {
   return (
-    <nav className="mb-2 flex" aria-label="Breadcrumb">
+    <nav className="flex" aria-label="Breadcrumb">
       <ol role="list" className="flex items-center space-x-4">
         <li>
           <div>

@@ -12,6 +12,9 @@ import StarRatings from 'react-star-ratings';
 import { useInfiniteCourses } from 'hooks';
 import Link from 'next/link';
 import CoursesFilter from 'components/Admin/Courses/CoursesFilter';
+import Breadcrumbs from 'components/Admin/Breadcrumbs';
+
+const pages = [{ name: 'Courses', href: '/Admin/Courses', current: true }];
 
 const CoursesAdminPage: NextPageWithLayout = () => {
   const {
@@ -29,6 +32,14 @@ const CoursesAdminPage: NextPageWithLayout = () => {
 
   return (
     <>
+      <div className="mb-6 mt-4 flex items-center justify-between">
+        <Breadcrumbs pages={pages} />
+        <Link href="/Admin/Courses/Add">
+          <a className="inline-flex h-fit items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            Add
+          </a>
+        </Link>
+      </div>
       <CoursesFilter query={query} setQuery={setQuery} />
 
       <div className="overflow-hidden bg-white shadow sm:rounded-md">
@@ -76,7 +87,7 @@ const CoursesAdminPage: NextPageWithLayout = () => {
                       <div className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
                         <div className="mr-4 flex flex-shrink-0">
                           <StarRatings
-                            rating={course.avgRating}
+                            rating={course.avgRating ? course.avgRating : 0}
                             starDimension="1.25rem"
                             starSpacing="0.0px"
                             starRatedColor="rgb(250 204 21)"
@@ -126,12 +137,6 @@ const CoursesAdminPage: NextPageWithLayout = () => {
   );
 };
 
-CoursesAdminPage.getLayout = (page) => (
-  <AdminLayout
-    pages={[{ name: 'Courses', href: '/Admin/Courses', current: true }]}
-  >
-    {page}
-  </AdminLayout>
-);
+CoursesAdminPage.getLayout = (page) => <AdminLayout>{page}</AdminLayout>;
 
 export default CoursesAdminPage;
