@@ -9,6 +9,7 @@ import { AppRouter } from 'server/routers/_app';
 import superjson from 'superjson';
 import '../styles/globals.css';
 import { AppLayout } from 'components/Layout/AppLayout';
+import { SessionProvider } from 'next-auth/react';
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -18,11 +19,18 @@ export type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
-const MyApp = (({ Component, pageProps }: AppPropsWithLayout) => {
+const MyApp = (({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppPropsWithLayout) => {
   const getLayout =
     Component.getLayout ?? ((page) => <AppLayout>{page}</AppLayout>);
 
-  return getLayout(<Component {...pageProps} />);
+  return getLayout(
+    <SessionProvider session={session}>
+      <Component {...pageProps} />
+    </SessionProvider>,
+  );
 }) as AppType;
 
 export function getBaseUrl() {
