@@ -1,7 +1,5 @@
-import NextAuth, { Account, User } from 'next-auth';
+import NextAuth from 'next-auth';
 import { AppProviders } from 'next-auth/providers';
-import CredentialsProvider from 'next-auth/providers/credentials';
-import bcrypt from 'bcrypt';
 import { prisma } from 'server/prisma';
 
 import GoogleProvider from 'next-auth/providers/google';
