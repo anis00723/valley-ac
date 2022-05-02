@@ -26,7 +26,7 @@ const features = [
 ];
 
 const HeaderSection = () => (
-  <div className="bg-gray-300">
+  <div className="bg-cape-cod-50">
     {/* Header */}
     <div className="relative bg-gray-800 pb-32">
       <div className="absolute inset-0">
@@ -36,14 +36,14 @@ const HeaderSection = () => (
           alt=""
         />
         <div
-          className="absolute inset-0 bg-gray-800 mix-blend-multiply"
+          className="absolute inset-0 bg-valley-gray-600 mix-blend-multiply"
           aria-hidden="true"
         />
       </div>
       <div className="relative mx-auto max-w-7xl px-4 py-24 sm:py-32 sm:px-6 lg:px-8">
         <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-5xl lg:text-6xl">
           Learn From{' '}
-          <span className="underline decoration-indigo-500 underline-offset-4">
+          <span className="underline decoration-valley-yellow-500 underline-offset-4">
             The Best
           </span>
         </h1>
@@ -70,8 +70,11 @@ const HeaderSection = () => (
             className="flex flex-col rounded-2xl bg-white shadow-xl"
           >
             <div className="relative flex-1 px-6 pt-20 pb-8 md:px-8">
-              <div className="absolute top-0 inline-block -translate-y-1/2 transform rounded-xl bg-indigo-600 p-5 shadow-lg">
-                <link.icon className="h-6 w-6 text-white" aria-hidden="true" />
+              <div className="absolute top-0 inline-block -translate-y-1/2 transform rounded-xl bg-valley-yellow-600 p-5 shadow-lg">
+                <link.icon
+                  className="h-6 w-6 text-valley-gray-400"
+                  aria-hidden="true"
+                />
               </div>
               <h3 className="text-xl font-medium text-gray-900">{link.name}</h3>
               <p className="mt-4 text-base text-gray-500">{link.description}</p>

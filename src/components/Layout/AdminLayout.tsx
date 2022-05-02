@@ -103,8 +103,8 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
                 <div className="flex flex-shrink-0 items-center px-4">
                   <img
                     className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
-                    alt="Workflow"
+                    src="./public/LOGO VC-01.svg"
+                    alt="Valley AC"
                   />
                 </div>
                 <div className="mt-5 h-0 flex-1 overflow-y-auto">
@@ -145,12 +145,12 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
         {/* Static sidebar for desktop */}
         <div className="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="flex min-h-0 flex-1 flex-col bg-gray-800">
-            <div className="flex h-16 flex-shrink-0 items-center bg-gray-900 px-4">
+          <div className="flex min-h-0 flex-1 flex-col bg-cape-cod-200">
+            <div className="flex h-16 flex-shrink-0 items-center bg-cape-cod-50 px-4">
               <img
                 className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
-                alt="Workflow"
+                src="/LOGO VC-02.svg"
+                alt="Valley AC"
               />
             </div>
             <div className="flex flex-1 flex-col overflow-y-auto">
@@ -160,16 +160,16 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
                     <a
                       className={classNames(
                         isExactPath(activePath, item.href)
-                          ? 'bg-gray-900 text-white'
-                          : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                          ? 'bg-cape-cod-400 text-cape-cod-50'
+                          : 'text-cape-cod-800 hover:bg-cape-cod-300 hover:text-cape-cod-900',
                         'group flex items-center rounded-md px-2 py-2 text-sm font-medium',
                       )}
                     >
                       <item.icon
                         className={classNames(
                           isExactPath(activePath, item.href)
-                            ? 'text-gray-300'
-                            : 'text-gray-400 group-hover:text-gray-300',
+                            ? 'text-cape-cod-100'
+                            : 'text-cape-cod-500 group-hover:text-cape-cod-500',
                           'mr-3 h-6 w-6 flex-shrink-0',
                         )}
                         aria-hidden="true"

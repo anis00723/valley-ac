@@ -17,9 +17,9 @@ const FormationDropdown = () => {
     <div
       className={classNames(
         isStartWithPath(activeRouter, '/Courses')
-          ? 'border-b-2 border-indigo-500'
+          ? 'border-b-4 border-valley-yellow-800'
           : '',
-        'relative inline-flex items-center px-4 pt-1 text-sm font-medium text-gray-900 hover:bg-gray-100',
+        'relative inline-flex items-center px-4 pt-1 text-sm font-medium text-gray-900 hover:bg-cape-cod-100',
       )}
       onMouseEnter={() => setFormationMenuOpen(true)}
       onMouseLeave={() => setFormationMenuOpen(false)}
@@ -39,11 +39,11 @@ const FormationDropdown = () => {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <div className="absolute top-0 left-0 z-10 mt-16 w-48 origin-top-right divide-y divide-gray-100 bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <div className="absolute top-0 left-0 z-10 mt-16 w-48 origin-top-right divide-y divide-gray-100 bg-cape-cod-50 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             {categoryQuery.data?.map(({ id, name }) => (
               <div key={id}>
                 <Link href={`/Courses/${name}`}>
-                  <a className="block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-700">
+                  <a className="block px-4 py-2 text-sm transition duration-150 ease-in-out hover:bg-cape-cod-100 hover:text-gray-900">
                     {name}
                   </a>
                 </Link>

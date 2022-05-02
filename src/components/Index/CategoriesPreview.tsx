@@ -12,7 +12,7 @@ export default function CategoriesPreview() {
           </h2>
           <a
             href="#"
-            className="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block"
+            className="hidden text-sm font-semibold text-selective-yellow-700 antialiased drop-shadow-sm hover:text-valley-yellow-600 sm:block"
           >
             Voir toutes nos formations<span aria-hidden="true"> &rarr;</span>
           </a>

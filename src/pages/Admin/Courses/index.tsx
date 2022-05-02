@@ -35,7 +35,7 @@ const CoursesAdminPage: NextPageWithLayout = () => {
       <div className="mb-6 mt-4 flex items-center justify-between">
         <Breadcrumbs pages={pages} />
         <Link href="/Admin/Courses/Add">
-          <a className="inline-flex h-fit items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+          <a className="inline-flex h-fit items-center rounded-md border border-transparent bg-selective-yellow-500 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-valley-yellow-600 focus:outline-none focus:ring-2 focus:ring-selective-yellow-500 focus:ring-offset-2">
             Add
           </a>
         </Link>
@@ -47,10 +47,13 @@ const CoursesAdminPage: NextPageWithLayout = () => {
           {courses.map((course) => (
             <li key={course.id}>
               <Link href={`/Admin/Courses/${course.id}`}>
-                <a href="#" className="flex justify-between hover:bg-gray-50">
+                <a
+                  href="#"
+                  className="flex justify-between hover:bg-cape-cod-50"
+                >
                   <div className="grow px-4 py-4 sm:px-6">
                     <div className="flex items-center justify-between">
-                      <p className="flex  truncate text-sm font-medium text-indigo-600">
+                      <p className="flex truncate text-sm font-semibold text-valley-yellow-700 antialiased">
                         {course.name}
                       </p>
                       <div className="ml-2 flex flex-shrink-0">

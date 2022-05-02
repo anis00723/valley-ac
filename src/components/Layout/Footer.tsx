@@ -97,11 +97,15 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:py-16 lg:px-8">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8 xl:col-span-1">
-            <img
-              className="h-10"
-              src="https://tailwindui.com/img/logos/workflow-mark-gray-300.svg"
-              alt="Company name"
-            />
+            <svg className="h-10" fill="currentColor">
+              <image
+                fillRule="evenodd"
+                className="h-12"
+                fill="currentColor"
+                xlinkHref="/LOGO VC-01.svg"
+                clipRule="evenodd"
+              ></image>
+            </svg>
             <p className="text-base text-gray-500">
               Making the world a better place through constructing elegant
               hierarchies.
@@ -196,7 +200,7 @@ export default function Footer() {
         </div>
         <div className="mt-12 border-t border-gray-200 pt-8">
           <p className="text-base text-gray-400 xl:text-center">
-            &copy; 2020 Workflow, Inc. All rights reserved.
+            &copy; 2022 Valley-AC, Inc. All rights reserved.
           </p>
         </div>
       </div>

@@ -19,6 +19,10 @@ const CoursesPage = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>,
 ) => {
   const { categoryIds } = props;
+  console.log(
+    '🚀 ~ file: [categoryName].tsx ~ line 22 ~ categoryIds',
+    categoryIds,
+  );
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [userSelectedCategory, setUserSelectedCategory] = useState(false);
   const filters = useCoursesStore((store) => store.filters);
@@ -42,6 +46,9 @@ const CoursesPage = (
     categoryIds?.map((categoryId) => {
       setOneOptionSelected('category', categoryId);
     });
+    if (categoryIds.length === 0) {
+      setOneOptionSelected('category', 'all');
+    }
   }, [categoryIds, setOneOptionSelected]);
 
   const handleOptionsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -145,7 +152,7 @@ const CoursesPage = (
                                     checked={option.selected}
                                     defaultValue={option.id}
                                     type="checkbox"
-                                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                    className="h-4 w-4 rounded border-gray-300 text-valley-yellow-700 focus:ring-valley-yellow-500"
                                   />
                                   <label
                                     htmlFor={`${section.id}-${optionIdx}-mobile`}
@@ -217,7 +224,7 @@ const CoursesPage = (
                                 defaultValue={option.id}
                                 onChange={(e) => handleOptionsChange(e)}
                                 type="checkbox"
-                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                className="h-4 w-4 rounded border-gray-300 text-valley-yellow-700 focus:ring-valley-yellow-500"
                               />
                               <label
                                 htmlFor={`${section.id}-${optionIdx}`}

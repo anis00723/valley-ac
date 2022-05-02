@@ -1,4 +1,4 @@
-import { Fragment, ReactNode } from 'react';
+import { Fragment, ReactNode, useState } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
 import { classNames } from 'utils/classNames';
@@ -8,16 +8,24 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { isExactPath } from 'utils/pathHelpers';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { signOut, useSession } from 'next-auth/react';
+import LoginModal from 'components/Auth/LoginModal';
 
 type AdminLayoutProps = { children: ReactNode };
 
 export const AppLayout = ({ children }: AdminLayoutProps) => {
+  const [loginFormOpen, setloginFormOpen] = useState(false);
+  const session = useSession();
+  const user = session?.data?.user;
+  const isAuthenticated = session?.status === 'authenticated';
   const router = useRouter();
   const activeRouter = router.pathname;
 
+  console.log('user', user);
+
   return (
     <>
-      <Disclosure as="nav" className="bg-white shadow">
+      <Disclosure as="nav" className="bg-cape-cod-50 shadow">
         {({ open }) => (
           <>
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -37,12 +45,12 @@ export const AppLayout = ({ children }: AdminLayoutProps) => {
                   <div className="flex flex-shrink-0 items-center">
                     <img
                       className="block h-8 w-auto lg:hidden"
-                      src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                      src="/LOGO VC-02.svg"
                       alt="Workflow"
                     />
                     <img
                       className="hidden h-8 w-auto lg:block"
-                      src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
+                      src="/LOGO VC-02.svg"
                       alt="Workflow"
                     />
                   </div>
@@ -52,9 +60,9 @@ export const AppLayout = ({ children }: AdminLayoutProps) => {
                       <a
                         className={classNames(
                           isExactPath(activeRouter, '/')
-                            ? 'border-b-2 border-indigo-500'
+                            ? 'border-b-4 border-valley-yellow-800'
                             : '',
-                          'inline-flex items-center px-4 pt-1 text-sm font-medium text-gray-900',
+                          'inline-flex items-center px-4 pt-1 text-sm font-medium text-gray-900 hover:bg-cape-cod-100',
                         )}
                       >
                         Acceuil
@@ -64,82 +72,95 @@ export const AppLayout = ({ children }: AdminLayoutProps) => {
                   </div>
                 </div>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                  <button
-                    type="button"
-                    className="rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                  >
-                    <span className="sr-only">View notifications</span>
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
+                  {/* If not authenticated show login button */}
+                  {!isAuthenticated && (
+                    <button
+                      onClick={() => setloginFormOpen(true)}
+                      className="ml-6 inline-flex items-center rounded-md border border-transparent bg-valley-yellow-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-valley-yellow-700 focus:outline-none focus:ring-2 focus:ring-valley-yellow-500 focus:ring-offset-2"
+                    >
+                      Se connecter
+                    </button>
+                  )}
+
+                  {isAuthenticated && (
+                    <button
+                      type="button"
+                      className="rounded-full bg-cape-cod-50 p-1 text-cape-cod-400 hover:bg-cape-cod-100 hover:text-valley-gray-200 focus:outline-none focus:ring-2 focus:ring-valley-yellow-500 focus:ring-offset-2"
+                    >
+                      <span className="sr-only">View notifications</span>
+                      <BellIcon className="h-6 w-6" aria-hidden="true" />
+                    </button>
+                  )}
 
                   {/* Profile dropdown */}
-                  <Menu as="div" className="relative ml-3">
-                    <div>
-                      <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                        <span className="sr-only">Open user menu</span>
-                        <img
-                          className="h-8 w-8 rounded-full"
-                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                          alt=""
-                        />
-                      </Menu.Button>
-                    </div>
-                    <Transition
-                      as={Fragment}
-                      enter="transition ease-out duration-200"
-                      enterFrom="transform opacity-0 scale-95"
-                      enterTo="transform opacity-100 scale-100"
-                      leave="transition ease-in duration-75"
-                      leaveFrom="transform opacity-100 scale-100"
-                      leaveTo="transform opacity-0 scale-95"
-                    >
-                      <Menu.Items className="ring-1ring-black absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-opacity-5 focus:outline-none">
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="#"
-                              className={classNames(
-                                active ? 'bg-gray-100' : '',
-                                'block px-4 py-2 text-sm text-gray-700',
-                              )}
-                            >
-                              Your Profile
-                            </a>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="#"
-                              className={classNames(
-                                active ? 'bg-gray-100' : '',
-                                'block px-4 py-2 text-sm text-gray-700',
-                              )}
-                            >
-                              Settings
-                            </a>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="#"
-                              className={classNames(
-                                active ? 'bg-gray-100' : '',
-                                'block px-4 py-2 text-sm text-gray-700',
-                              )}
-                            >
-                              Sign out
-                            </a>
-                          )}
-                        </Menu.Item>
-                      </Menu.Items>
-                    </Transition>
-                  </Menu>
+                  {isAuthenticated && (
+                    <Menu as="div" className="relative ml-3">
+                      <div>
+                        <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-valley-yellow-500 focus:ring-offset-2">
+                          <span className="sr-only">Open user menu</span>
+                          <img
+                            className="h-8 w-8 rounded-full"
+                            src={user?.image || '/avatar.svg'}
+                            alt="User Avatar Image"
+                          />
+                        </Menu.Button>
+                      </div>
+                      <Transition
+                        as={Fragment}
+                        enter="transition ease-out duration-200"
+                        enterFrom="transform opacity-0 scale-95"
+                        enterTo="transform opacity-100 scale-100"
+                        leave="transition ease-in duration-75"
+                        leaveFrom="transform opacity-100 scale-100"
+                        leaveTo="transform opacity-0 scale-95"
+                      >
+                        <Menu.Items className="ring-1ring-black absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-opacity-5 focus:outline-none">
+                          <Menu.Item>
+                            {({ active }) => (
+                              <div
+                                className={classNames(
+                                  active ? 'bg-gray-100' : '',
+                                  'block cursor-pointer px-4 py-2 text-sm text-gray-700',
+                                )}
+                              >
+                                Your Profile
+                              </div>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <div
+                                className={classNames(
+                                  active ? 'bg-gray-100' : '',
+                                  'block cursor-pointer px-4 py-2 text-sm text-gray-700',
+                                )}
+                              >
+                                Settings
+                              </div>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <div
+                                onClick={() => signOut()}
+                                className={classNames(
+                                  active ? 'bg-gray-100' : '',
+                                  'block cursor-pointer px-4 py-2 text-sm text-gray-700',
+                                )}
+                              >
+                                Sign out
+                              </div>
+                            )}
+                          </Menu.Item>
+                        </Menu.Items>
+                      </Transition>
+                    </Menu>
+                  )}
                 </div>
               </div>
             </div>
 
+            {/* // ! Mobile menu */}
             <Disclosure.Panel className="sm:hidden">
               <div className="space-y-1 pt-2 pb-4">
                 {/* Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" */}
@@ -176,6 +197,8 @@ export const AppLayout = ({ children }: AdminLayoutProps) => {
           </>
         )}
       </Disclosure>
+
+      <LoginModal open={loginFormOpen} setOpen={setloginFormOpen}></LoginModal>
       <main>{children}</main>
 
       {process.env.NODE_ENV !== 'production' && (
