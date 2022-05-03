@@ -55,6 +55,8 @@ model User {
 
   enrolledCourses Course[]
   role            UserRole @default(USER)
+
+  createdAt DateTime @default(now())
 }
 
 model VerificationToken {

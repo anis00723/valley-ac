@@ -21,8 +21,6 @@ export const AppLayout = ({ children }: AdminLayoutProps) => {
   const router = useRouter();
   const activeRouter = router.pathname;
 
-  console.log('user', user);
-
   return (
     <>
       <Disclosure as="nav" className="bg-cape-cod-50 shadow">
@@ -44,12 +42,14 @@ export const AppLayout = ({ children }: AdminLayoutProps) => {
                 <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                   <div className="flex flex-shrink-0 items-center">
                     <img
-                      className="block h-8 w-auto lg:hidden"
+                      onClick={() => router.push('/')}
+                      className="block h-8 w-auto cursor-pointer lg:hidden"
                       src="/LOGO VC-02.svg"
                       alt="Workflow"
                     />
                     <img
-                      className="hidden h-8 w-auto lg:block"
+                      onClick={() => router.push('/')}
+                      className="hidden h-8 w-auto cursor-pointer lg:block"
                       src="/LOGO VC-02.svg"
                       alt="Workflow"
                     />

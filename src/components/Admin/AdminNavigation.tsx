@@ -1,4 +1,4 @@
-type CoursesNavigationProps = {
+type AdminNavigationProps = {
   onNextPage: () => void;
   onPreviousPage: () => void;
   count: number;
@@ -8,7 +8,7 @@ type CoursesNavigationProps = {
   pageIndex: number;
 };
 
-const CoursesNavigation = (props: CoursesNavigationProps) => {
+const AdminNavigation = (props: AdminNavigationProps) => {
   const {
     onNextPage,
     onPreviousPage,
@@ -50,4 +50,4 @@ const CoursesNavigation = (props: CoursesNavigationProps) => {
   );
 };
 
-export default CoursesNavigation;
+export default AdminNavigation;

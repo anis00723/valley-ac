@@ -12,17 +12,13 @@ import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { createContext } from 'server/context';
 import superjson from 'superjson';
 import { appRouter } from 'server/routers/_app';
-import CoursesNavigation from 'components/Courses/CoursesNavigation';
+import AdminNavigation from 'components/Admin/AdminNavigation';
 import { useInfiniteCourses } from '../../hooks';
 
 const CoursesPage = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>,
 ) => {
   const { categoryIds } = props;
-  console.log(
-    '🚀 ~ file: [categoryName].tsx ~ line 22 ~ categoryIds',
-    categoryIds,
-  );
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [userSelectedCategory, setUserSelectedCategory] = useState(false);
   const filters = useCoursesStore((store) => store.filters);
@@ -246,7 +242,7 @@ const CoursesPage = (
             <div className="mt-6 mb-10 lg:col-span-2 lg:mt-0 xl:col-span-3">
               <CoursesGrid courses={courses} />
 
-              <CoursesNavigation
+              <AdminNavigation
                 count={count}
                 onNextPage={handleNextPage}
                 onPreviousPage={handlePreviousPage}

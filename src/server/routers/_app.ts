@@ -7,6 +7,7 @@ import { createRouter } from '../createRouter';
 import { categoryRouter } from './category';
 import { courseRouter } from './course';
 import { postRouter } from './post';
+import { userRouter } from './user';
 
 /**
  * Create your application's root router
@@ -49,6 +50,7 @@ export const appRouter = createRouter()
    */
   .merge('post.', postRouter)
   .merge('category.', categoryRouter)
-  .merge('course.', courseRouter);
+  .merge('course.', courseRouter)
+  .merge('user.', userRouter);
 
 export type AppRouter = typeof appRouter;

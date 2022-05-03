@@ -213,7 +213,6 @@ export const courseRouter = createRouter()
     async resolve({ input }) {
       const { id } = input;
 
-      console.log(input);
       const course = await prisma.course.findUnique({
         where: {
           id,

@@ -5,7 +5,7 @@ import {
   CurrencyDollarIcon,
   UsersIcon,
 } from '@heroicons/react/outline';
-import CoursesNavigation from 'components/Courses/CoursesNavigation';
+import AdminNavigation from 'components/Admin/AdminNavigation';
 import AdminLayout from 'components/Layout/AdminLayout';
 import { NextPageWithLayout } from 'pages/_app';
 import StarRatings from 'react-star-ratings';
@@ -127,7 +127,7 @@ const CoursesAdminPage: NextPageWithLayout = () => {
           ))}
         </ul>
       </div>
-      <CoursesNavigation
+      <AdminNavigation
         count={count}
         onNextPage={handleNextPage}
         onPreviousPage={handlePreviousPage}
