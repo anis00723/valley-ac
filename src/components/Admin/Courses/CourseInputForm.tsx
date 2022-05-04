@@ -3,7 +3,7 @@ import { Editor } from '@tinymce/tinymce-react';
 import { useCallback, useRef, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { classNames } from 'utils/classNames';
-import SelectMenu from './SelectMenu';
+import SelectMenu from '../../Shared/SelectMenu';
 
 const ImageSVG = () => (
   <svg

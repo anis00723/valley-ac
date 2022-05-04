@@ -9,11 +9,15 @@ import AdminNavigation from 'components/Admin/AdminNavigation';
 import AdminLayout from 'components/Layout/AdminLayout';
 import { useInfiniteUsers } from 'hooks/useInfiniteUsers';
 import { NextPageWithLayout } from 'pages/_app';
-import React from 'react';
+import React, { useState } from 'react';
+import ModifyUserModal from 'components/Admin/Users/ModifyUserModal';
 
 const pages = [{ name: 'Users', href: '/Admin/Users', current: true }];
 
 const UsersAdminPage: NextPageWithLayout = () => {
+  const [modifyUserModalOpen, setModifyUserModalOpen] = useState(false);
+  const [modifiableUserId, setModifiableUserId] = useState('');
+
   const {
     users,
     count,
@@ -27,18 +31,32 @@ const UsersAdminPage: NextPageWithLayout = () => {
     setQuery,
   } = useInfiniteUsers();
 
+  const handleModifyUser = (userId: string) => {
+    setModifyUserModalOpen(true);
+    setModifiableUserId(userId);
+  };
+
   return (
     <>
+      <ModifyUserModal
+        open={modifyUserModalOpen}
+        setOpen={setModifyUserModalOpen}
+        userId={modifiableUserId}
+      />
       <div className="mb-6 mt-4 flex items-center justify-between">
         <Breadcrumbs pages={pages} />
       </div>
+
       <UsersFilter query={query} setQuery={setQuery} />
 
       <div className="overflow-hidden bg-white shadow sm:rounded-md">
         <ul role="list" className="divide-y divide-gray-200">
           {users.map((user) => (
             <li key={user.email}>
-              <a href={''} className="block hover:bg-gray-50">
+              <div
+                className="block cursor-pointer hover:bg-gray-50"
+                onClick={() => handleModifyUser(user.id)}
+              >
                 <div className="flex items-center px-4 py-4 sm:px-6">
                   <div className="flex min-w-0 flex-1 items-center">
                     <div className="flex-shrink-0">
@@ -87,7 +105,7 @@ const UsersAdminPage: NextPageWithLayout = () => {
                     />
                   </div>
                 </div>
-              </a>
+              </div>
             </li>
           ))}
         </ul>
