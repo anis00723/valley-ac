@@ -2,6 +2,7 @@ import {
   MailIcon,
   ChevronRightIcon,
   InformationCircleIcon,
+  CalendarIcon,
 } from '@heroicons/react/outline';
 import Breadcrumbs from 'components/Admin/Breadcrumbs';
 import UsersFilter from 'components/Admin/Users/UsersFilter';
@@ -68,7 +69,7 @@ const UsersAdminPage: NextPageWithLayout = () => {
                     </div>
                     <div className="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
                       <div>
-                        <p className="truncate text-sm font-medium text-indigo-600">
+                        <p className="truncate text-sm font-semibold text-valley-yellow-700 antialiased">
                           {user.name}
                         </p>
                         <p className="mt-2 flex items-center text-sm text-gray-500">
@@ -81,8 +82,12 @@ const UsersAdminPage: NextPageWithLayout = () => {
                       </div>
                       <div className="hidden md:block">
                         <div>
-                          <p className="text-sm text-gray-900">
-                            Since{' '}
+                          <p className="flex text-sm text-gray-900 ">
+                            <CalendarIcon
+                              className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400"
+                              aria-hidden="true"
+                            />
+                            <p className="pr-1">Since</p>
                             <time dateTime={user.createdAt.toDateString()}>
                               {user.createdAt.toDateString()}
                             </time>
