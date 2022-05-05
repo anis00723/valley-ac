@@ -10,9 +10,16 @@ import superjson from 'superjson';
 import '../styles/globals.css';
 import { AppLayout } from 'components/Layout/AppLayout';
 import { SessionProvider } from 'next-auth/react';
+import { AuthGuard } from 'components/Auth/AuthGuard';
+import { UserRole } from '@prisma/client';
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
+  requireAuth?: boolean;
+  authParams?: {
+    allowedRoles?: UserRole[] | null;
+    redirectTo: string | null;
+  };
 };
 
 export type AppPropsWithLayout = AppProps & {
@@ -24,17 +31,23 @@ const MyApp = (({
   pageProps: { session, ...pageProps },
 }: AppPropsWithLayout) => {
   const getLayout =
-    Component.getLayout ??
-    ((page) => (
-      <SessionProvider session={session}>
-        <AppLayout>{page}</AppLayout>
-      </SessionProvider>
-    ));
+    Component.getLayout ?? ((page) => <AppLayout>{page}</AppLayout>);
 
-  return getLayout(
+  return (
     <SessionProvider session={session}>
-      <Component {...pageProps} />
-    </SessionProvider>,
+      {Component.requireAuth ? (
+        <AuthGuard
+          authParams={{
+            allowedRoles: Component.authParams?.allowedRoles ?? [UserRole.USER],
+            redirectTo: Component.authParams?.redirectTo ?? '/',
+          }}
+        >
+          {getLayout(<Component {...pageProps} />)}
+        </AuthGuard>
+      ) : (
+        getLayout(<Component {...pageProps} />)
+      )}
+    </SessionProvider>
   );
 }) as AppType;
 

@@ -1,5 +1,5 @@
-import { Fragment, ReactNode, useState } from 'react';
-import { Disclosure, Menu, Transition } from '@headlessui/react';
+import { ReactNode, useState } from 'react';
+import { Disclosure } from '@headlessui/react';
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
 import { classNames } from 'utils/classNames';
 import FormationDropdown from 'components/Layout/FormationDropdown';
@@ -8,12 +8,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { isExactPath } from 'utils/pathHelpers';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import LoginModal from 'components/Auth/LoginModal';
+import { ProfileDropdown } from '../Shared/ProfileDropdown';
 
-type AdminLayoutProps = { children: ReactNode };
+type AppLayoutProps = { children: ReactNode };
 
-export const AppLayout = ({ children }: AdminLayoutProps) => {
+export const AppLayout = ({ children }: AppLayoutProps) => {
   const [loginFormOpen, setloginFormOpen] = useState(false);
   const session = useSession();
   const user = session?.data?.user;
@@ -93,69 +94,7 @@ export const AppLayout = ({ children }: AdminLayoutProps) => {
                   )}
 
                   {/* Profile dropdown */}
-                  {isAuthenticated && (
-                    <Menu as="div" className="relative ml-3">
-                      <div>
-                        <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-valley-yellow-500 focus:ring-offset-2">
-                          <span className="sr-only">Open user menu</span>
-                          <img
-                            className="h-8 w-8 rounded-full"
-                            src={user?.image || '/avatar.svg'}
-                            alt="User Avatar Image"
-                          />
-                        </Menu.Button>
-                      </div>
-                      <Transition
-                        as={Fragment}
-                        enter="transition ease-out duration-200"
-                        enterFrom="transform opacity-0 scale-95"
-                        enterTo="transform opacity-100 scale-100"
-                        leave="transition ease-in duration-75"
-                        leaveFrom="transform opacity-100 scale-100"
-                        leaveTo="transform opacity-0 scale-95"
-                      >
-                        <Menu.Items className="ring-1ring-black absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-opacity-5 focus:outline-none">
-                          <Menu.Item>
-                            {({ active }) => (
-                              <div
-                                className={classNames(
-                                  active ? 'bg-gray-100' : '',
-                                  'block cursor-pointer px-4 py-2 text-sm text-gray-700',
-                                )}
-                              >
-                                Your Profile
-                              </div>
-                            )}
-                          </Menu.Item>
-                          <Menu.Item>
-                            {({ active }) => (
-                              <div
-                                className={classNames(
-                                  active ? 'bg-gray-100' : '',
-                                  'block cursor-pointer px-4 py-2 text-sm text-gray-700',
-                                )}
-                              >
-                                Settings
-                              </div>
-                            )}
-                          </Menu.Item>
-                          <Menu.Item>
-                            {({ active }) => (
-                              <div
-                                onClick={() => signOut()}
-                                className={classNames(
-                                  active ? 'bg-gray-100' : '',
-                                  'block cursor-pointer px-4 py-2 text-sm text-gray-700',
-                                )}
-                              >
-                                Sign out
-                              </div>
-                            )}
-                          </Menu.Item>
-                        </Menu.Items>
-                      </Transition>
-                    </Menu>
-                  )}
+                  {isAuthenticated && <ProfileDropdown user={user} />}
                 </div>
               </div>
             </div>
@@ -198,7 +137,7 @@ export const AppLayout = ({ children }: AdminLayoutProps) => {
         )}
       </Disclosure>
 
-      <LoginModal open={loginFormOpen} setOpen={setloginFormOpen}></LoginModal>
+      <LoginModal open={loginFormOpen} setOpen={setloginFormOpen} />
       <main>{children}</main>
 
       {process.env.NODE_ENV !== 'production' && (

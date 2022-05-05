@@ -16,4 +16,9 @@ export default NextAuth({
   adapter: PrismaAdapter(prisma),
   providers,
   debug: process.env.NODE_ENV === 'development',
+  callbacks: {
+    session({ session, user }) {
+      return { ...session, user };
+    },
+  },
 });

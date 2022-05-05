@@ -12,6 +12,7 @@ import { useInfiniteUsers } from 'hooks/useInfiniteUsers';
 import { NextPageWithLayout } from 'pages/_app';
 import React, { useState } from 'react';
 import ModifyUserModal from 'components/Admin/Users/ModifyUserModal';
+import { UserRole } from '@prisma/client';
 
 const pages = [{ name: 'Users', href: '/Admin/Users', current: true }];
 
@@ -130,5 +131,10 @@ const UsersAdminPage: NextPageWithLayout = () => {
 };
 
 UsersAdminPage.getLayout = (page) => <AdminLayout>{page}</AdminLayout>;
+UsersAdminPage.requireAuth = true;
+UsersAdminPage.authParams = {
+  allowedRoles: [UserRole.ADMIN],
+  redirectTo: '/Admin',
+};
 
 export default UsersAdminPage;
