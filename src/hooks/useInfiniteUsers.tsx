@@ -1,6 +1,6 @@
+import { useDebounce } from 'hooks';
 import { useCallback, useEffect, useState } from 'react';
 import { trpc } from 'utils/trpc';
-import useDebounce from './useDebounce';
 
 export const useInfiniteUsers = () => {
   const [pageIndex, setPageIndex] = useState(0);

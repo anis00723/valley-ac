@@ -1,6 +1,7 @@
 import {
   CalendarIcon,
   PresentationChartLineIcon,
+  TrashIcon,
 } from '@heroicons/react/outline';
 import AdminNavigation from 'components/Admin/AdminNavigation';
 import AdminLayout from 'components/Layout/AdminLayout';
@@ -12,12 +13,14 @@ import ModifyCategoryModal from 'components/Admin/Category/ModifyCategoryModal';
 import { Category, UserRole } from '@prisma/client';
 import AddCategoryModal from 'components/Admin/Category/AddCategoryModal';
 import CategoryFilter from 'components/Admin/Category/CategoryFilter';
+import DeleteConfiramtionModal from 'components/Admin/Category/DeleteConfirmationModal';
 
 const pages = [{ name: 'Courses', href: '/Admin/Courses', current: true }];
 
 const CategoriesAdminPage: NextPageWithLayout = () => {
   const [modifyCategoryModalOpen, setModifyCategoryModalOpen] = useState(false);
   const [addCategoryModalOpen, setAddCategoryModalOpen] = useState(false);
+  const [deleteCategoryModalOpen, setDeleteCategoryModalOpen] = useState(false);
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>();
 
   const handleClickedCategory = (category: Category) => {
@@ -27,6 +30,15 @@ const CategoriesAdminPage: NextPageWithLayout = () => {
 
   const handleAddCategoryClicked = () => {
     setAddCategoryModalOpen(true);
+  };
+
+  const handleDeleteCategoryClicked = (
+    e: React.MouseEvent<HTMLDivElement>,
+    category: Category,
+  ) => {
+    e.stopPropagation();
+    setSelectedCategoryId(category.id);
+    setDeleteCategoryModalOpen(true);
   };
 
   const {
@@ -48,6 +60,14 @@ const CategoriesAdminPage: NextPageWithLayout = () => {
         <ModifyCategoryModal
           open={modifyCategoryModalOpen}
           setOpen={setModifyCategoryModalOpen}
+          categoryId={selectedCategoryId}
+        />
+      )}
+
+      {selectedCategoryId && (
+        <DeleteConfiramtionModal
+          open={deleteCategoryModalOpen}
+          setOpen={setDeleteCategoryModalOpen}
           categoryId={selectedCategoryId}
         />
       )}
@@ -81,6 +101,20 @@ const CategoriesAdminPage: NextPageWithLayout = () => {
                     <p className="truncate text-sm font-semibold text-valley-yellow-700 antialiased">
                       {category.name}
                     </p>
+                    <div className="ml-2 flex flex-shrink-0">
+                      <div
+                        className="inline-flex items-center rounded-md bg-red-100 p-1 leading-5 text-red-800 antialiased"
+                        onClick={(e) =>
+                          handleDeleteCategoryClicked(e, category)
+                        }
+                      >
+                        <TrashIcon
+                          className="mr-1.5 h-4 w-4 flex-shrink-0 text-red-800"
+                          aria-hidden="true"
+                        />
+                        {'Delete'}
+                      </div>
+                    </div>
                   </div>
                   <div className="mt-2 sm:flex sm:justify-between">
                     <div className="sm:flex">

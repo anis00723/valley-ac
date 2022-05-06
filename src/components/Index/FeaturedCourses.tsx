@@ -1,4 +1,5 @@
 import { UsersIcon } from '@heroicons/react/outline';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import StarRatings from 'react-star-ratings';
 import processCourses from 'utils/processCourses';
@@ -21,7 +22,7 @@ export default function FeaturedCourses() {
       <div className="mx-auto max-w-2xl px-4 py-10 sm:py-16 sm:px-6 lg:max-w-7xl lg:px-8">
         <div className="flex items-center justify-between space-x-4">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">
-            Les Formations du moment
+            Featured Courses
           </h2>
         </div>
         <div className="mt-6 grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-3">
@@ -47,10 +48,12 @@ export default function FeaturedCourses() {
               </div>
               <div className="mt-4 flex items-center justify-between space-x-8 text-base font-medium text-gray-900">
                 <h3>
-                  <a href="#">
-                    <span aria-hidden="true" className="absolute inset-0" />
-                    {product.name}
-                  </a>
+                  <Link href={`/Courses/${product.id}`}>
+                    <a>
+                      <span aria-hidden="true" className="absolute inset-0" />
+                      {product.name}
+                    </a>
+                  </Link>
                 </h3>
                 <p>${product.price}</p>
               </div>

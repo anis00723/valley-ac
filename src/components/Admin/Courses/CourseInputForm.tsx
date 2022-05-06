@@ -249,7 +249,6 @@ const CourseInputForm = ({
                       id="thumbnail"
                       name="thumbnail"
                       type="file"
-                      defaultValue={thumbnail}
                       className="sr-only"
                       {...getInputProps()}
                     />
