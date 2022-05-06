@@ -1,3 +1,4 @@
+import { UserRole } from '@prisma/client';
 import Breadcrumbs from 'components/Admin/Breadcrumbs';
 import CourseInputForm from 'components/Admin/Courses/CourseInputForm';
 import ErrorModal from 'components/Admin/Courses/ErrorModal';
@@ -85,5 +86,10 @@ const AddCourse: NextPageWithLayout = () => {
 };
 
 AddCourse.getLayout = (page) => <AdminLayout>{page}</AdminLayout>;
+AddCourse.requireAuth = true;
+AddCourse.authParams = {
+  redirectTo: '/Admin',
+  allowedRoles: [UserRole.ADMIN, UserRole.CONTENT_CREATOR],
+};
 
 export default AddCourse;

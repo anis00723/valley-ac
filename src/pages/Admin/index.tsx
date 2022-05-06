@@ -1,3 +1,4 @@
+import { UserRole } from '@prisma/client';
 import AdminLayout from 'components/Layout/AdminLayout';
 import { useSession } from 'next-auth/react';
 import { NextPageWithLayout } from 'pages/_app';
@@ -13,5 +14,10 @@ const AdminViewPage: NextPageWithLayout = () => {
 };
 
 AdminViewPage.getLayout = (page) => <AdminLayout>{page}</AdminLayout>;
+AdminViewPage.requireAuth = true;
+AdminViewPage.authParams = {
+  redirectTo: '/',
+  allowedRoles: [UserRole.ADMIN, UserRole.CONTENT_CREATOR],
+};
 
 export default AdminViewPage;

@@ -13,6 +13,7 @@ import { useInfiniteCourses } from 'hooks';
 import Link from 'next/link';
 import CoursesFilter from 'components/Admin/Courses/CoursesFilter';
 import Breadcrumbs from 'components/Admin/Breadcrumbs';
+import { UserRole } from '@prisma/client';
 
 const pages = [{ name: 'Courses', href: '/Admin/Courses', current: true }];
 
@@ -141,5 +142,10 @@ const CoursesAdminPage: NextPageWithLayout = () => {
 };
 
 CoursesAdminPage.getLayout = (page) => <AdminLayout>{page}</AdminLayout>;
+CoursesAdminPage.requireAuth = true;
+CoursesAdminPage.authParams = {
+  redirectTo: '/Admin',
+  allowedRoles: [UserRole.ADMIN, UserRole.CONTENT_CREATOR],
+};
 
 export default CoursesAdminPage;

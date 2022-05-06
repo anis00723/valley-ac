@@ -9,7 +9,7 @@ import Breadcrumbs from 'components/Admin/Breadcrumbs';
 import { useInfiniteCategories } from 'hooks/useInfiniteCategories';
 import { useState } from 'react';
 import ModifyCategoryModal from 'components/Admin/Category/ModifyCategoryModal';
-import { Category } from '@prisma/client';
+import { Category, UserRole } from '@prisma/client';
 import AddCategoryModal from 'components/Admin/Category/AddCategoryModal';
 import CategoryFilter from 'components/Admin/Category/CategoryFilter';
 
@@ -125,5 +125,10 @@ const CategoriesAdminPage: NextPageWithLayout = () => {
 };
 
 CategoriesAdminPage.getLayout = (page) => <AdminLayout>{page}</AdminLayout>;
+CategoriesAdminPage.requireAuth = true;
+CategoriesAdminPage.authParams = {
+  redirectTo: '/Admin',
+  allowedRoles: [UserRole.ADMIN, UserRole.CONTENT_CREATOR],
+};
 
 export default CategoriesAdminPage;

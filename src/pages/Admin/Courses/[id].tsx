@@ -12,6 +12,7 @@ import ErrorModal from 'components/Admin/Courses/ErrorModal';
 import CourseInputForm from 'components/Admin/Courses/CourseInputForm';
 import Breadcrumbs from 'components/Admin/Breadcrumbs';
 import { useCourseInputForm } from 'hooks';
+import { UserRole } from '@prisma/client';
 
 const pages = [
   { name: 'Courses', href: '/Admin/Courses', current: false },
@@ -112,6 +113,11 @@ export default CoursesDetailAdminPage;
 CoursesDetailAdminPage.getLayout = (page: ReactElement) => (
   <AdminLayout>{page}</AdminLayout>
 );
+CoursesDetailAdminPage.requireAuth = true;
+CoursesDetailAdminPage.authParams = {
+  redirectTo: '/Admin',
+  allowedRoles: [UserRole.ADMIN, UserRole.CONTENT_CREATOR],
+};
 
 export async function getServerSideProps(
   context: GetServerSidePropsContext<{ id: string }>,
