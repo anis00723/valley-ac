@@ -15,7 +15,7 @@ export const config = {
 const allowedFileTypes = ['image/jpeg', 'image/png'];
 
 const post = async (req: NextApiRequest, res: NextApiResponse) => {
-  await fs.promises.mkdir('./path/to/my/directory', { recursive: true });
+  await fs.promises.mkdir(FILE_PATH, { recursive: true });
 
   const form = new formidable.IncomingForm({
     uploadDir: FILE_PATH,
