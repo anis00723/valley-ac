@@ -37,7 +37,7 @@ const AddCategoryModal = ({
   }, []);
 
   const onDrop = useCallback(
-    async (acceptedFiles) => {
+    async (acceptedFiles: File[]) => {
       setThumbnailIsUploading(true);
       onThumbnailDrop(acceptedFiles);
       setThumbnailIsUploading(false);
@@ -50,7 +50,10 @@ const AddCategoryModal = ({
     maxFiles: 1,
     multiple: false,
     maxSize: 1024 * 1024 * 10,
-    accept: 'image/jpeg, image/png',
+    accept: {
+      'image/png': ['.png'],
+      'text/jpeg': ['.jpg', '.jpeg'],
+    },
   });
 
   const categoryMutation = trpc.useMutation('category.add', {
