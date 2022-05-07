@@ -4,7 +4,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { getBaseUrl } from 'pages/_app';
 import fs from 'fs';
 
-const FILE_PATH = 'public/images/';
+const FILE_PATH = './public/images/';
 
 export const config = {
   api: {
