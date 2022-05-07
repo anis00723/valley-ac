@@ -1592,7 +1592,7 @@ attr-accept@^2.2.2:
   resolved "https://registry.yarnpkg.com/attr-accept/-/attr-accept-2.2.2.tgz#646613809660110749e92f2c10833b70968d929b"
   integrity sha512-7prDjvt9HmqiZ0cl5CRjtS84sEyhsHP2coDkaZKRKVfCDo9s7iw7ChVmar78Gu9pC4SoR/28wFu/G5JJhTnqEg==
 
-autoprefixer@^10.4.4:
+autoprefixer@^10.4.7:
   version "10.4.7"
   resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-10.4.7.tgz#1db8d195f41a52ca5069b7593be167618edbbedf"
   integrity sha512-ypHju4Y2Oav95SipEcCcI5J7CGPuvz8oat7sUtYj3ClK44bldfvtvcxK6IEK++7rqB7YchDGzweZIBG+SD0ZAA==
