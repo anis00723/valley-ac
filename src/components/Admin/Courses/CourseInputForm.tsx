@@ -300,7 +300,7 @@ const CourseInputForm = ({
               <Editor
                 // @ts-ignore
                 onInit={(evt, editor) => (editorRef.current = editor)}
-                apiKey="2ldt4e6fud5ahxocva48icsccabhi0x8iobaa5qxkutkay8d"
+                apiKey={process.env.TINYMCE_API_KEY}
                 // initialValue="<p>This is the initial content of the editor.</p>"
                 onEditorChange={(newValue) => setEditorValue(newValue)}
                 value={editorValue}
