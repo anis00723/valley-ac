@@ -2,6 +2,7 @@ import { prisma } from 'server/prisma';
 import formidable from 'formidable';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getBaseUrl } from 'pages/_app';
+import fs from 'fs';
 
 const FILE_PATH = './public/images/';
 
@@ -14,6 +15,8 @@ export const config = {
 const allowedFileTypes = ['image/jpeg', 'image/png'];
 
 const post = async (req: NextApiRequest, res: NextApiResponse) => {
+  await fs.promises.mkdir('./path/to/my/directory', { recursive: true });
+
   const form = new formidable.IncomingForm({
     uploadDir: FILE_PATH,
     keepExtensions: true,
