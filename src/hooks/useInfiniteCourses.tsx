@@ -3,6 +3,7 @@ import { trpc } from '../utils/trpc';
 import processCourses from '../utils/processCourses';
 import { useCoursesStore } from 'store/CoursesStore';
 import { useDebounce } from 'hooks';
+import { ResultItem } from 'server/routers/course';
 
 export const useInfiniteCourses = (
   userSelectedCategory?: boolean,
@@ -46,7 +47,7 @@ export const useInfiniteCourses = (
     setHasNextPage(coursesQuery.data?.pages[pageIndex]?.nextCursor !== null);
   }, [coursesQuery.data?.pages, pageIndex]);
 
-  const [courses, setCourses] = useState(() =>
+  const [courses, setCourses] = useState<ResultItem[]>(() =>
     processCourses(coursesQuery.data?.pages[pageIndex]?.result.items),
   );
 
@@ -54,7 +55,7 @@ export const useInfiniteCourses = (
     coursesQuery.data?.pages[pageIndex]?.result.count || 0,
   );
 
-  const replaceCourses = useCallback((newCourses) => {
+  const replaceCourses = useCallback((newCourses: ResultItem[]) => {
     setCourses(newCourses);
   }, []);
 

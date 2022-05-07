@@ -1,3 +1,4 @@
+import { User } from '@prisma/client';
 import { useDebounce } from 'hooks';
 import { useCallback, useEffect, useState } from 'react';
 import { trpc } from 'utils/trpc';
@@ -37,7 +38,7 @@ export const useInfiniteUsers = () => {
     usersQuery.data?.pages[pageIndex]?.result.count || 0,
   );
 
-  const replaceUsers = useCallback((newUsers) => {
+  const replaceUsers = useCallback((newUsers: User[]) => {
     setUsers(newUsers);
   }, []);
 

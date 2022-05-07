@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { ResultItem } from 'server/routers/category';
 import { trpc } from 'utils/trpc';
 import useDebounce from './useDebounce';
 
@@ -37,7 +38,7 @@ export const useInfiniteCategories = () => {
     categoriesQuery.data?.pages[pageIndex]?.result.count || 0,
   );
 
-  const replaceCategories = useCallback((newCategories) => {
+  const replaceCategories = useCallback((newCategories: ResultItem[]) => {
     setCategories(newCategories);
   }, []);
 
