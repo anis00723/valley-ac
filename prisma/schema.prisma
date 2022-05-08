@@ -67,17 +67,6 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Post {
-  id    String @id @default(uuid())
-  title String
-  text  String
-
-  // To return `Date`s intact through the API we need to add data transformers
-  // https://trpc.io/docs/data-transformers
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-}
-
 model Course {
   id          String   @id @default(uuid())
   name        String

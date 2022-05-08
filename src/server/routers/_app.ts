@@ -6,7 +6,6 @@ import { ZodError } from 'zod';
 import { createRouter } from '../createRouter';
 import { categoryRouter } from './category';
 import { courseRouter } from './course';
-import { postRouter } from './post';
 import { userRouter } from './user';
 
 /**
@@ -48,7 +47,7 @@ export const appRouter = createRouter()
   /**
    * Merge `postRouter` under `post.`
    */
-  .merge('post.', postRouter)
+  // .merge('post.', postRouter)
   .merge('category.', categoryRouter)
   .merge('course.', courseRouter)
   .merge('user.', userRouter);
