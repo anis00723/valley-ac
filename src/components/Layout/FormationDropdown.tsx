@@ -26,7 +26,7 @@ const FormationDropdown = () => {
     >
       <>
         <div className="inline-flex w-full justify-center">
-          <Link href="/Courses/all">Nos Formations</Link>
+          <Link href="/Courses/all">Courses</Link>
           <ChevronDownIcon className="ml-2 -mr-1 h-5 w-5" aria-hidden="true" />
         </div>
         <Transition

@@ -9,13 +9,13 @@ export default function CategoriesPreview() {
       <div className="py-10 sm:py-16 xl:mx-auto xl:max-w-7xl xl:px-8">
         <div className="px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">
-            Nos Formations par Catégorie
+            Our Courses by Category
           </h2>
           <a
             href="#"
             className="hidden text-sm font-semibold text-selective-yellow-700 antialiased drop-shadow-sm hover:text-valley-yellow-600 sm:block"
           >
-            Voir toutes nos formations<span aria-hidden="true"> &rarr;</span>
+            See all courses<span aria-hidden="true"> &rarr;</span>
           </a>
         </div>
 

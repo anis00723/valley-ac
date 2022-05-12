@@ -6,21 +6,21 @@ import {
 
 const features = [
   {
-    name: 'Formations de qualités',
+    name: 'Quality training',
     description:
-      'Le centre de formation est certifié et reconnu par 2 Organismes internationaux',
+      'The training center is certified and recognized by 2 international organizations',
     icon: IdentificationIcon,
   },
   {
-    name: 'En ligne',
+    name: 'Online',
     description:
-      'Des Formations accessibles à vie depuis votre ordinateur, tablette et mobile',
+      'Training accessible for life from your computer, tablet and mobile',
     icon: GlobeIcon,
   },
   {
-    name: '+ de 10.000 étudiant(e)s satifisfait(e)s',
+    name: '+ 10,000 satisfied students',
     description:
-      'Nous recherchons le 100% de satisfactions grâce à des formations et un service de qualité',
+      'We seek 100% satisfaction through training and quality service',
     icon: AcademicCapIcon,
   },
 ];
@@ -48,9 +48,8 @@ const HeaderSection = () => (
           </span>
         </h1>
         <p className="mt-6 max-w-3xl text-xl text-gray-300">
-          Varius facilisi mauris sed sit. Non sed et duis dui leo, vulputate id
-          malesuada non. Cras aliquet purus dui laoreet diam sed lacus, fames.
-          Dui, amet, nec sit pulvinar.
+          We are a training center that offers a wide range of courses for
+          different categories.
         </p>
       </div>
     </div>

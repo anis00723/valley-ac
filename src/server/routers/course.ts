@@ -64,6 +64,7 @@ export const courseRouter = createRouter()
             categoryId: {
               in: input.categoryIds,
             },
+            published: true,
             name: {
               contains: query,
               mode: 'insensitive',
@@ -90,6 +91,7 @@ export const courseRouter = createRouter()
             categoryId: {
               in: input.categoryIds,
             },
+            published: true,
             name: {
               contains: query,
               mode: 'insensitive',
@@ -104,6 +106,7 @@ export const courseRouter = createRouter()
               contains: query,
               mode: 'insensitive',
             },
+            published: true,
           },
           take: limit + 1,
           include: {
@@ -128,6 +131,7 @@ export const courseRouter = createRouter()
               contains: query,
               mode: 'insensitive',
             },
+            published: true,
           },
         });
         result.items = items;
@@ -151,6 +155,7 @@ export const courseRouter = createRouter()
       return prisma.course.findMany({
         where: {
           featured: true,
+          published: true,
         },
         include: {
           category: true,
