@@ -13,6 +13,7 @@ import { NextPageWithLayout } from 'pages/_app';
 import React, { useState } from 'react';
 import ModifyUserModal from 'components/Admin/Users/ModifyUserModal';
 import { UserRole } from '@prisma/client';
+import Image from 'components/Image';
 
 const pages = [{ name: 'Users', href: '/Admin/Users', current: true }];
 
@@ -62,11 +63,15 @@ const UsersAdminPage: NextPageWithLayout = () => {
                 <div className="flex items-center px-4 py-4 sm:px-6">
                   <div className="flex min-w-0 flex-1 items-center">
                     <div className="flex-shrink-0">
-                      <img
-                        className="h-12 w-12 rounded-full"
-                        src={'/avatar.svg'}
-                        alt=""
-                      />
+                      <div className="h-12 w-12 rounded-full">
+                        <Image
+                          rounded={true}
+                          width={48}
+                          height={48}
+                          src={user.image || '/avatar.svg'}
+                          alt={user.name}
+                        />
+                      </div>
                     </div>
                     <div className="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
                       <div>

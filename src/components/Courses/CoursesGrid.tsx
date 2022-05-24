@@ -3,6 +3,7 @@ import React from 'react';
 import StarRatings from 'react-star-ratings';
 import { ResultItem } from 'server/routers/course';
 import { UsersIcon } from '@heroicons/react/outline';
+import Image from 'components/Image';
 
 const CoursesGrid = ({ courses }: { courses: ResultItem[] }) => {
   return (
@@ -15,12 +16,8 @@ const CoursesGrid = ({ courses }: { courses: ResultItem[] }) => {
             key={product.id}
             className="group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white"
           >
-            <div className="aspect-w-4 aspect-h-4 bg-gray-200 group-hover:opacity-75 sm:aspect-none sm:h-48">
-              <img
-                src={product.thumbnail}
-                alt={product.name}
-                className="h-full w-full object-cover object-center sm:h-full sm:w-full"
-              />
+            <div className="aspect-w-4 aspect-h-4 bg-gray-200 group-hover:opacity-75">
+              <Image src={product.thumbnail} alt={product.name} layout="fill" />
             </div>
             <div className="flex flex-1 flex-col space-y-2 p-4">
               <h3 className="flex items-center justify-between text-sm font-medium text-gray-900">

@@ -1,7 +1,7 @@
 /**
  * This file contains the root router of your tRPC-backend
  */
-import superjson from 'superjson';
+import { transformer } from 'utils/trpc';
 import { ZodError } from 'zod';
 import { createRouter } from '../createRouter';
 import { categoryRouter } from './category';
@@ -19,7 +19,7 @@ export const appRouter = createRouter()
    * Add data transformers
    * @link https://trpc.io/docs/data-transformers
    */
-  .transformer(superjson)
+  .transformer(transformer)
   /**
    * Optionally do custom error (type safe!) formatting
    * @link https://trpc.io/docs/error-formatting

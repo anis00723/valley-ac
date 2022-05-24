@@ -1,3 +1,4 @@
+import Image from 'components/Image';
 import Link from 'next/link';
 import { trpc } from 'utils/trpc';
 
@@ -27,11 +28,13 @@ export default function CategoriesPreview() {
                   <Link key={category.id} href={`/Courses/${category.name}`}>
                     <a className="relative flex h-80 w-56 flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto">
                       <span aria-hidden="true" className="absolute inset-0">
-                        <img
-                          src={category.thumbnail}
-                          alt=""
-                          className="h-full w-full object-cover object-center"
-                        />
+                        <div className="h-full w-full object-cover object-center">
+                          <Image
+                            layout="fill"
+                            src={category.thumbnail}
+                            alt={category.name}
+                          />
+                        </div>
                       </span>
                       <span
                         aria-hidden="true"

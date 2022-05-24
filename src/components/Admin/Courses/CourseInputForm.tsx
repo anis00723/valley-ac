@@ -64,6 +64,11 @@ const CourseInputForm = ({
 
   const editorRef = useRef(null);
 
+  console.log(
+    '🚀 ~ file: CourseInputForm.tsx ~ line 69 ~ process.env',
+    process.env.NEXT_PUBLIC_TINYMCE_API_KEY,
+  );
+
   return (
     <form
       className="space-y-8 divide-y divide-gray-200"
@@ -300,7 +305,7 @@ const CourseInputForm = ({
               <Editor
                 // @ts-ignore
                 onInit={(evt, editor) => (editorRef.current = editor)}
-                apiKey={process.env.TINYMCE_API_KEY}
+                apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
                 // initialValue="<p>This is the initial content of the editor.</p>"
                 onEditorChange={(newValue) => setEditorValue(newValue)}
                 value={editorValue}

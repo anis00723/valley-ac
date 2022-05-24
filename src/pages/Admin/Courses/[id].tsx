@@ -1,10 +1,9 @@
 import AdminLayout from 'components/Layout/AdminLayout';
-import { trpc } from '../../../utils/trpc';
+import { transformer, trpc } from '../../../utils/trpc';
 import { ReactElement, useEffect } from 'react';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { createSSGHelpers } from '@trpc/react/ssg';
 import { createContext } from 'server/context';
-import superjson from 'superjson';
 import { appRouter } from 'server/routers/_app';
 import { useRouter } from 'next/router';
 import SuccessModal from 'components/Admin/Courses/SuccessModal';
@@ -125,7 +124,7 @@ export async function getServerSideProps(
   const ssg = createSSGHelpers({
     router: appRouter,
     ctx: await createContext(),
-    transformer: superjson, // optional - adds superjson serialization
+    transformer: transformer, // optional - adds superjson serialization
   });
 
   const id = context.params?.id;

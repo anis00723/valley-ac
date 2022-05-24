@@ -8,6 +8,7 @@ import { ResultItem } from 'server/routers/course';
 export const useInfiniteCourses = (
   userSelectedCategory?: boolean,
   categoryIds?: string[],
+  published?: boolean,
 ) => {
   const [pageIndex, setPageIndex] = useState(0);
   const [firstElementIndex, setFirstElementIndex] = useState(0);
@@ -31,6 +32,7 @@ export const useInfiniteCourses = (
         categoryIds: userSelectedCategory
           ? selectedOptionsIds('category')
           : categoryIds,
+        published,
         query: debouncedQuery,
       },
     ],

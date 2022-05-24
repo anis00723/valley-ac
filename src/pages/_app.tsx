@@ -6,12 +6,12 @@ import { AppProps } from 'next/app';
 import { AppType } from 'next/dist/shared/lib/utils';
 import { ReactElement, ReactNode } from 'react';
 import { AppRouter } from 'server/routers/_app';
-import superjson from 'superjson';
 import '../styles/globals.css';
 import { AppLayout } from 'components/Layout/AppLayout';
 import { SessionProvider } from 'next-auth/react';
 import { AuthGuard } from 'components/Auth/AuthGuard';
 import { UserRole } from '@prisma/client';
+import { transformer } from 'utils/trpc';
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -94,7 +94,7 @@ export default withTRPC<AppRouter>({
       /**
        * @link https://trpc.io/docs/data-transformers
        */
-      transformer: superjson,
+      transformer: transformer,
       /**
        * @link https://react-query.tanstack.com/reference/QueryClient
        */

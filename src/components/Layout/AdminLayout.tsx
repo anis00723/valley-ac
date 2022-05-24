@@ -101,7 +101,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
                 <div className="flex flex-shrink-0 items-center px-4">
                   <img
                     className="h-8 w-auto"
-                    src="./public/LOGO VC-01.svg"
+                    src="/LOGO VC-01.svg"
                     alt="Valley AC"
                   />
                 </div>

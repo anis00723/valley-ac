@@ -44,6 +44,7 @@ export const courseRouter = createRouter()
       categoryIds: z.string().uuid().array().optional(),
       limit: z.number().min(1).max(100).nullish(),
       cursor: z.string().nullish(),
+      published: z.boolean().optional(),
       query: z.string().nullish(),
     }),
     async resolve({ input }) {
@@ -56,6 +57,7 @@ export const courseRouter = createRouter()
       };
 
       const query = input.query || undefined;
+      const published = input.published;
 
       if (input.categoryIds?.length !== 0) {
         items = await prisma.course.findMany({
@@ -64,7 +66,7 @@ export const courseRouter = createRouter()
             categoryId: {
               in: input.categoryIds,
             },
-            published: true,
+            published,
             name: {
               contains: query,
               mode: 'insensitive',
@@ -91,7 +93,7 @@ export const courseRouter = createRouter()
             categoryId: {
               in: input.categoryIds,
             },
-            published: true,
+            published,
             name: {
               contains: query,
               mode: 'insensitive',
@@ -106,7 +108,7 @@ export const courseRouter = createRouter()
               contains: query,
               mode: 'insensitive',
             },
-            published: true,
+            published: published,
           },
           take: limit + 1,
           include: {
@@ -131,7 +133,7 @@ export const courseRouter = createRouter()
               contains: query,
               mode: 'insensitive',
             },
-            published: true,
+            published,
           },
         });
         result.items = items;

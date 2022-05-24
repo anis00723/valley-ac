@@ -1,3 +1,5 @@
+import Image from 'components/Image';
+
 export const Testimonials = () => {
   return (
     <div className="mx-auto w-full bg-cape-cod-50 p-8 py-16">
@@ -11,11 +13,14 @@ export const Testimonials = () => {
       </p>
       <div className="mt-8 flex items-center justify-center">
         <a href="#" className="relative block">
-          <img
-            alt="profil"
-            src="https://www.tailwind-kit.com/images/person/1.jpg"
-            className="mx-auto h-10 w-10 rounded-full object-cover "
-          />
+          <div className="mx-auto h-10 w-10">
+            <Image
+              rounded={true}
+              layout="fill"
+              alt="profil"
+              src="https://www.tailwind-kit.com/images/person/1.jpg"
+            />
+          </div>
         </a>
         <div className="ml-2 flex items-center justify-center">
           <span className="mr-2 text-lg font-semibold text-selective-yellow-700">

@@ -3,6 +3,17 @@ import type { inferProcedureOutput } from '@trpc/server';
 // ℹ️ Type-only import:
 // https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-8.html#type-only-imports-and-export
 import type { AppRouter } from 'server/routers/_app';
+import superjson from 'superjson';
+
+type DataTransformer = {
+  serialize(object: any): any;
+  deserialize(object: any): any;
+};
+
+type CombinedDataTransformer = {
+  input: DataTransformer;
+  output: DataTransformer;
+};
 
 /**
  * A set of strongly-typed React hooks from your `AppRouter` type signature with `createReactQueryHooks`.
@@ -10,7 +21,11 @@ import type { AppRouter } from 'server/routers/_app';
  */
 export const trpc = createReactQueryHooks<AppRouter>();
 
-// export const transformer = superjson;
+export const transformer: CombinedDataTransformer = {
+  input: superjson,
+  output: superjson,
+};
+
 /**
  * This is a helper method to infer the output of a query resolver
  * @example type HelloOutput = inferQueryOutput<'hello'>

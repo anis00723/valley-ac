@@ -104,7 +104,7 @@ export default function Footer() {
                 fill="currentColor"
                 xlinkHref="/LOGO VC-01.svg"
                 clipRule="evenodd"
-              ></image>
+              />
             </svg>
             <p className="text-base text-gray-500">
               Making the world a better place through constructing elegant

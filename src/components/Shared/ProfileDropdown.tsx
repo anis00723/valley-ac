@@ -2,6 +2,7 @@ import { Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { classNames } from 'utils/classNames';
 import { signOut } from 'next-auth/react';
+import Image from 'next/image';
 
 export function ProfileDropdown({
   user,
@@ -19,11 +20,14 @@ export function ProfileDropdown({
       <div>
         <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-valley-yellow-500 focus:ring-offset-2">
           <span className="sr-only">Open user menu</span>
-          <img
-            className="h-8 w-8 rounded-full"
-            src={user?.image || '/avatar.svg'}
-            alt="User Avatar Image"
-          />
+          <div className="h-8 w-8 ">
+            <Image
+              layout="fill"
+              className="rounded-full"
+              src={user?.image || '/avatar.svg'}
+              alt="User Avatar Image"
+            />
+          </div>
         </Menu.Button>
       </div>
       <Transition

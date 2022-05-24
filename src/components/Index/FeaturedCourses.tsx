@@ -1,4 +1,5 @@
 import { UsersIcon } from '@heroicons/react/outline';
+import Image from 'components/Image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import StarRatings from 'react-star-ratings';
@@ -32,11 +33,13 @@ export default function FeaturedCourses() {
               className="group relative rounded-lg bg-white p-3 pb-4 shadow-sm hover:opacity-75"
             >
               <div className="aspect-w-4 aspect-h-3 overflow-hidden rounded-lg bg-gray-100 shadow-sm">
-                <img
-                  src={product.thumbnail}
-                  alt=""
-                  className="h-full w-full object-cover object-center"
-                />
+                <div className="h-full w-full object-cover object-center">
+                  <Image
+                    layout="fill"
+                    src={product.thumbnail}
+                    alt={product.name}
+                  />
+                </div>
                 <div
                   className="flex items-end p-4 opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus:opacity-100"
                   aria-hidden="true"
@@ -48,7 +51,7 @@ export default function FeaturedCourses() {
               </div>
               <div className="mt-4 flex items-center justify-between space-x-8 text-base font-medium text-gray-900">
                 <h3>
-                  <Link href={`/Courses/${product.id}`}>
+                  <Link href={`/Course/${product.id}`}>
                     <a>
                       <span aria-hidden="true" className="absolute inset-0" />
                       {product.name}

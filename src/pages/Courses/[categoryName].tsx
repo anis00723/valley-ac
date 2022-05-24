@@ -5,12 +5,11 @@ import { Dialog, Disclosure, Transition } from '@headlessui/react';
 import { XIcon } from '@heroicons/react/outline';
 import { ChevronDownIcon, PlusSmIcon } from '@heroicons/react/solid';
 import { classNames } from 'utils/classNames';
-import { trpc } from 'utils/trpc';
+import { transformer, trpc } from 'utils/trpc';
 import CoursesGrid from 'components/Courses/CoursesGrid';
 import { useCoursesStore } from 'store/CoursesStore';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { createContext } from 'server/context';
-import superjson from 'superjson';
 import { appRouter } from 'server/routers/_app';
 import AdminNavigation from 'components/Admin/AdminNavigation';
 import { useInfiniteCourses } from '../../hooks';
@@ -63,7 +62,7 @@ const CoursesPage = (
     hasNextPage,
     setPageIndex,
     pageIndex,
-  } = useInfiniteCourses(userSelectedCategory, categoryIds);
+  } = useInfiniteCourses(userSelectedCategory, categoryIds, true);
 
   return (
     <div className="bg-white">
@@ -176,8 +175,7 @@ const CoursesPage = (
               Formations
             </h1>
             <p className="mt-4 text-base text-gray-500">
-              Checkout out the latest release of Basic Tees, new and improved
-              with four openings!
+              Check out our latest courses and tutorials.
             </p>
           </div>
 
@@ -295,7 +293,7 @@ export async function getServerSideProps(
   const ssg = createSSGHelpers({
     router: appRouter,
     ctx: await createContext(),
-    transformer: superjson, // optional - adds superjson serialization
+    transformer: transformer, // optional - adds superjson serialization
   });
 
   const categoryName = context.params?.categoryName
