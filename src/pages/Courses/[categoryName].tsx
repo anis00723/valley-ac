@@ -46,6 +46,8 @@ const CoursesPage = (
       setOneOptionSelected('category', 'all');
     }
   }, [categoryIds, setOneOptionSelected]);
+
+  const [pageIndexNumber, setPageIndexNumber] = useState(1);
   const [selectedCat, setSelectedCat] = useState(['' + categoryIds]);
   const handleOptionsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     toggleOptionSelect('category', e.target.value);
@@ -59,27 +61,20 @@ const CoursesPage = (
   };
 
   const {
-    courses,
-    count,
     handleNextPage,
     handlePreviousPage,
     firstElementIndex,
-    lastElementIndex,
     hasNextPage,
     setPageIndex,
-    pageIndex,
   } = useInfiniteCourses(userSelectedCategory, categoryIds, true);
 
-  // console.log('userSelectedCategory: ', userSelectedCategory);
-
-  // console.log('userSelectedCategory: ', userSelectedCategory);
   const [coursesFromApi, setCoursesFromApi] = useState([]);
   const [lastItem, setLastItem] = useState(0);
   const [resultCount, setResultCount] = useState(0);
   const setCoursesFromApiFun = async () => {
     const response = await axios.post('/api/courses/coursesByCat_Id', {
       categoryIds: selectedCat,
-      pageNum: 1,
+      pageNum: pageIndexNumber,
     });
     setCoursesFromApi(response.data.resultWithPagination);
     setLastItem(response.data.lastItem);
@@ -88,11 +83,8 @@ const CoursesPage = (
 
   useEffect(() => {
     setCoursesFromApiFun().catch(console.error);
-  }, [selectedCat, setCoursesFromApi, userSelectedCategory]);
+  }, [pageIndexNumber, selectedCat, setCoursesFromApi, userSelectedCategory]);
 
-
-
-  // console.log('maxPages: ', maxPages);
   return (
     <div className='bg-white'>
       <div>
@@ -278,7 +270,10 @@ const CoursesPage = (
                 firstElementIndex={firstElementIndex}
                 lastElementIndex={lastItem}
                 hasNextPage={hasNextPage}
-                pageIndex={pageIndex}
+                pageIndex={pageIndexNumber}
+                // @ts-ignore
+                setPageIndexNumber={setPageIndexNumber}
+                pageData={coursesFromApi}
               />
             </div>
           </div>
