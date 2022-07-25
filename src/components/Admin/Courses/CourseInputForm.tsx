@@ -1,6 +1,6 @@
 import { Category } from '@prisma/client';
 import { Editor } from '@tinymce/tinymce-react';
-import { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { classNames } from 'utils/classNames';
 import SelectMenu from '../../Shared/SelectMenu';
@@ -28,18 +28,18 @@ type PropsType = {
 };
 
 const CourseInputForm = ({
-  formState,
-  handleChange,
-  onThumbnailDrop,
-  thumbnail,
-  categories,
-  selectedCategory,
-  setSelectedCategory,
-  editorValue,
-  setEditorValue,
-  handleCancel,
-  handleSubmit,
-}: PropsType) => {
+                           formState,
+                           handleChange,
+                           onThumbnailDrop,
+                           thumbnail,
+                           categories,
+                           selectedCategory,
+                           setSelectedCategory,
+                           editorValue,
+                           setEditorValue,
+                           handleCancel,
+                           handleSubmit,
+                         }: PropsType) => {
   const [thumbnailIsUploading, setThumbnailIsUploading] = useState(false);
 
   const onDrop = useCallback(
@@ -71,88 +71,88 @@ const CourseInputForm = ({
 
   return (
     <form
-      className="space-y-8 divide-y divide-gray-200"
+      className='space-y-8 divide-y divide-gray-200'
       onSubmit={handleSubmit}
     >
-      <div className="space-y-8 divide-y divide-gray-200">
+      <div className='space-y-8 divide-y divide-gray-200'>
         <div>
           <div>
-            <h3 className="text-lg font-medium leading-6 text-gray-900">
+            <h3 className='text-lg font-medium leading-6 text-gray-900'>
               General Information
             </h3>
-            <p className="mt-1 text-sm text-gray-500">
+            <p className='mt-1 text-sm text-gray-500'>
               General information about the course.
             </p>
           </div>
 
-          <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-            <div className="sm:col-span-4">
+          <div className='mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6'>
+            <div className='sm:col-span-4'>
               <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700"
+                htmlFor='name'
+                className='block text-sm font-medium text-gray-700'
               >
                 Name
               </label>
-              <div className="mt-1 flex rounded-md shadow-sm">
+              <div className='mt-1 flex rounded-md shadow-sm'>
                 <input
-                  type="text"
-                  name="name"
-                  id="name"
+                  type='text'
+                  name='name'
+                  id='name'
                   value={formState.name}
                   onChange={handleChange}
-                  autoComplete="name"
-                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  autoComplete='name'
+                  className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
                 />
               </div>
             </div>
 
-            <div className="sm:col-span-6">
+            <div className='sm:col-span-6'>
               <label
-                htmlFor="about"
-                className="block text-sm font-medium text-gray-700"
+                htmlFor='about'
+                className='block text-sm font-medium text-gray-700'
               >
                 Description
               </label>
-              <div className="mt-1">
+              <div className='mt-1'>
                 <textarea
-                  id="description"
-                  name="description"
+                  id='description'
+                  name='description'
                   value={formState.description}
                   onChange={handleChange}
                   rows={3}
-                  className="block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className='block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
                 />
               </div>
-              <p className="mt-2 text-sm text-gray-500">
+              <p className='mt-2 text-sm text-gray-500'>
                 Write a few sentences what this course is about.
               </p>
             </div>
 
             <div>
               <label
-                htmlFor="price"
-                className="block text-sm font-medium text-gray-700"
+                htmlFor='price'
+                className='block text-sm font-medium text-gray-700'
               >
                 Price
               </label>
-              <div className="relative mt-1 rounded-md shadow-sm">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <span className="text-gray-500 sm:text-sm">$</span>
+              <div className='relative mt-1 rounded-md shadow-sm'>
+                <div className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3'>
+                  <span className='text-gray-500 sm:text-sm'>$</span>
                 </div>
                 <input
-                  type="number"
-                  name="price"
-                  id="price"
+                  type='number'
+                  name='price'
+                  id='price'
                   value={formState.price}
                   onChange={handleChange}
-                  className="block w-full rounded-md border-gray-300 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  placeholder="0.00"
-                  aria-describedby="price-currency"
+                  className='block w-full rounded-md border-gray-300 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+                  placeholder='0.00'
+                  aria-describedby='price-currency'
                 />
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3'>
                   <span
-                    className="text-gray-500 sm:text-sm"
-                    id="price-currency"
+                    className='text-gray-500 sm:text-sm'
+                    id='price-currency'
                   >
                     USD
                   </span>
@@ -160,31 +160,31 @@ const CourseInputForm = ({
               </div>
             </div>
 
-            <div className="sm:col-span-6">
+            <div className='sm:col-span-6'>
               <fieldset>
-                <legend className="text-base font-medium text-gray-900">
+                <legend className='text-base font-medium text-gray-900'>
                   Featured & Published
                 </legend>
-                <div className="mt-4 space-y-4">
-                  <div className="relative flex items-start">
-                    <div className="flex h-5 items-center">
+                <div className='mt-4 space-y-4'>
+                  <div className='relative flex items-start'>
+                    <div className='flex h-5 items-center'>
                       <input
-                        id="featured"
-                        name="featured"
+                        id='featured'
+                        name='featured'
                         checked={formState.featured}
                         onChange={handleChange}
-                        type="checkbox"
-                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                        type='checkbox'
+                        className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
                       />
                     </div>
-                    <div className="ml-3 text-sm">
+                    <div className='ml-3 text-sm'>
                       <label
-                        htmlFor="featured"
-                        className="font-medium text-gray-700"
+                        htmlFor='featured'
+                        className='font-medium text-gray-700'
                       >
                         Is Featured
                       </label>
-                      <p className="text-gray-500">
+                      <p className='text-gray-500'>
                         If a course is featured it will be displayed in the
                         langing page.
                       </p>
@@ -192,26 +192,26 @@ const CourseInputForm = ({
                   </div>
                 </div>
 
-                <div className="mt-4 space-y-4">
-                  <div className="relative flex items-start">
-                    <div className="flex h-5 items-center">
+                <div className='mt-4 space-y-4'>
+                  <div className='relative flex items-start'>
+                    <div className='flex h-5 items-center'>
                       <input
-                        id="published"
-                        name="published"
+                        id='published'
+                        name='published'
                         checked={formState.published}
                         onChange={handleChange}
-                        type="checkbox"
-                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                        type='checkbox'
+                        className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
                       />
                     </div>
-                    <div className="ml-3 text-sm">
+                    <div className='ml-3 text-sm'>
                       <label
-                        htmlFor="published"
-                        className="font-medium text-gray-700"
+                        htmlFor='published'
+                        className='font-medium text-gray-700'
                       >
                         Is Published
                       </label>
-                      <p className="text-gray-500">
+                      <p className='text-gray-500'>
                         If a course is published it will show in the courses
                         list else it will be hidden.
                       </p>
@@ -221,10 +221,10 @@ const CourseInputForm = ({
               </fieldset>
             </div>
 
-            <div className="sm:col-span-6">
+            <div className='sm:col-span-6'>
               <label
-                htmlFor="thumbnail-photo"
-                className="block text-sm font-medium text-gray-700"
+                htmlFor='thumbnail-photo'
+                className='block text-sm font-medium text-gray-700'
               >
                 Thumbnail
               </label>
@@ -252,36 +252,36 @@ const CourseInputForm = ({
                 >
                   {!thumbnailIsUploading && <ImageSVG />}
                   {thumbnailIsUploading && <SpinnerComponent />}
-                  <div className="flex items-center text-sm text-gray-600">
+                  <div className='flex items-center text-sm text-gray-600'>
                     <input
-                      id="thumbnail"
-                      name="thumbnail"
-                      type="file"
-                      className="sr-only"
+                      id='thumbnail'
+                      name='thumbnail'
+                      type='file'
+                      className='sr-only'
                       {...getInputProps()}
                     />
-                    <p className="pl-1">
+                    <p className='pl-1'>
                       Drag 'n' drop some files here, or click to select files
                     </p>
                   </div>
-                  <p className="text-xs text-gray-600">PNG, JPG up to 10MB</p>
+                  <p className='text-xs text-gray-600'>PNG, JPG up to 10MB</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="pt-8">
+        <div className='pt-8'>
           <div>
-            <h3 className="text-lg font-medium leading-6 text-gray-900">
+            <h3 className='text-lg font-medium leading-6 text-gray-900'>
               Category
             </h3>
-            <p className="mt-1 text-sm text-gray-500">
+            <p className='mt-1 text-sm text-gray-500'>
               Select the category and modules that this course belongs to.
             </p>
           </div>
 
-          <div className="mt-6">
+          <div className='mt-6'>
             <SelectMenu
               label={'Category'}
               options={categories}
@@ -291,16 +291,16 @@ const CourseInputForm = ({
           </div>
         </div>
 
-        <div className="pt-8">
+        <div className='pt-8'>
           <div>
-            <h3 className="text-lg font-medium leading-6 text-gray-900">
+            <h3 className='text-lg font-medium leading-6 text-gray-900'>
               Front page
             </h3>
-            <p className="mt-1 text-sm text-gray-500">
+            <p className='mt-1 text-sm text-gray-500'>
               Write a few sentences what this course is about.
             </p>
           </div>
-          <div className="mt-6">
+          <div className='mt-6'>
             {
               <Editor
                 // @ts-ignore
@@ -309,7 +309,7 @@ const CourseInputForm = ({
                 // initialValue="<p>This is the initial content of the editor.</p>"
                 onEditorChange={(newValue) => setEditorValue(newValue)}
                 value={editorValue}
-                textareaName="content"
+                textareaName='content'
                 init={{
                   height: 500,
                   menubar: true,
@@ -368,30 +368,30 @@ const CourseInputForm = ({
           </div>
         </div>
 
-        <div className="pt-8">
+        <div className='pt-8'>
           <div>
-            <h3 className="text-lg font-medium leading-6 text-gray-900">
+            <h3 className='text-lg font-medium leading-6 text-gray-900'>
               Modules
             </h3>
-            <p className="mt-1 text-sm text-gray-500">
+            <p className='mt-1 text-sm text-gray-500'>
               Add or delele Modules for this course
             </p>
           </div>
-          <div className="mt-6">{/* Modules */}</div>
+          <div className='mt-6'>{/* Modules */}</div>
         </div>
       </div>
-      <div className="pt-5">
-        <div className="flex justify-end">
+      <div className='pt-5'>
+        <div className='flex justify-end'>
           <button
             onClick={handleCancel}
-            type="button"
-            className="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-valley-yellow-500 focus:ring-offset-2"
+            type='button'
+            className='rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-valley-yellow-500 focus:ring-offset-2'
           >
             Cancel
           </button>
           <button
-            type="submit"
-            className="ml-3 inline-flex justify-center rounded-md border border-transparent bg-valley-yellow-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-valley-yellow-700 focus:outline-none focus:ring-2 focus:ring-valley-yellow-500 focus:ring-offset-2"
+            type='submit'
+            className='ml-3 inline-flex justify-center rounded-md border border-transparent bg-valley-yellow-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-valley-yellow-700 focus:outline-none focus:ring-2 focus:ring-valley-yellow-500 focus:ring-offset-2'
           >
             Save
           </button>

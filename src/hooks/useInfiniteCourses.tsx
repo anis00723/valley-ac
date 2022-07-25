@@ -25,6 +25,7 @@ export const useInfiniteCourses = (
     [filters],
   );
 
+
   const coursesQuery = trpc.useInfiniteQuery(
     [
       'course.all',
@@ -41,6 +42,7 @@ export const useInfiniteCourses = (
     },
   );
 
+  // console.log("coursesQuery here  : ",coursesQuery);
   const [hasNextPage, setHasNextPage] = useState(
     coursesQuery.data?.pages[pageIndex]?.nextCursor !== null,
   );

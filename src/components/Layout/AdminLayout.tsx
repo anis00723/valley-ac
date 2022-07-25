@@ -37,7 +37,7 @@ const navigation = [
 type AdminLayoutProps = {
   children: React.ReactNode;
 };
-
+import vsc1 from 'images/LOGO_VC-01.svg';
 const AdminLayout = ({ children }: AdminLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const router = useRouter();
@@ -102,7 +102,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
                 <div className='flex flex-shrink-0 items-center px-4'>
                   <Image
                     className='h-8 w-auto'
-                    src='/LOGO VC-01.svg'
+                    src={vsc1}
                     alt='Valley AC'
                   />
                 </div>

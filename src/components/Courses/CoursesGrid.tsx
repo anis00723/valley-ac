@@ -36,17 +36,17 @@ const CoursesGrid = ({ courses }: { courses: ResultItem[] }) => {
               <div className="flex flex-1 flex-col justify-end">
                 <div className="flex items-center justify-between">
                   <p className="text-sm italic text-gray-600">
-                    {product.category.name}
+                    {product.category?.name}
                   </p>
                   <p className="flex items-center text-sm text-gray-500">
-                    {product._count.enrolledUsers}
+                    {/*{product._count.enrolledUsers}*/}
                     <UsersIcon className="ml-1 inline-block h-3 w-3" />
                   </p>
                 </div>
               </div>
               <div className="flex items-center justify-between border-t pt-2">
                 <p className="text-sm text-gray-700">
-                  {product._count.reviews} reviews
+                  {product.reviews.length} reviews
                 </p>
 
                 <div className="flex flex-shrink-0">
