@@ -37,10 +37,10 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
   req.method === 'POST'
     ? res.status(404).send('')
     : req.method === 'PUT'
-    ? res.status(404).send('')
-    : req.method === 'DELETE'
-    ? res.status(404).send('')
-    : req.method === 'GET'
-    ? get(req, res)
-    : res.status(404).send('');
+      ? res.status(404).send('')
+      : req.method === 'DELETE'
+        ? res.status(404).send('')
+        : req.method === 'GET'
+          ? get(req, res)
+          : res.status(404).send('');
 };

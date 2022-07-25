@@ -49,8 +49,8 @@ export const useInfiniteCategories = () => {
       }
       return (
         pageIndex *
-          // @ts-ignore
-          categoriesQuery?.data?.pages[pageIndex - 1]?.result?.items?.length +
+        // @ts-ignore
+        categoriesQuery?.data?.pages[pageIndex - 1]?.result?.items?.length +
         1
       );
     });
